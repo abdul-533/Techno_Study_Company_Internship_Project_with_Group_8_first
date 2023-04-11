@@ -13,8 +13,40 @@ public class DialogContent extends Parent {
         PageFactory.initElements(GWD.getDriver(), this);
     }
 
-    @FindBy(css = "")
-    private WebElement xxxx;
+    @FindBy(css = "input[formcontrolname='username']")
+    private WebElement userName;
+
+    @FindBy(css = "input[formcontrolname='password']")
+    private WebElement password;
+
+    @FindBy(css = "button[aria-label='LOGIN']")
+    private WebElement loginButton;
+
+    @FindBy(xpath = "//*[@data-icon='plus']")
+    private WebElement addButtonDp;
+
+    @FindBy(xpath = "//*[@data-placeholder='Name']")
+    private WebElement nameInputDP;
+
+    @FindBy(xpath = "//*[@data-placeholder='Code']")
+    private WebElement codeInputDP;
+
+    @FindBy(xpath = "//button[@class='mat-focus-indicator mat-tooltip-trigger mat-accent mat-button mat-raised-button mat-button-base ng-star-inserted']")
+    private WebElement saveButtonDP;
+
+    @FindBy(xpath = "(//*[@data-icon='pen-to-square'])[1]")
+    private WebElement editButtonDP;
+
+    @FindBy(xpath = "(//*[@data-icon='trash-can'])[1]")
+    private WebElement trashButtonDP;
+
+    @FindBy(xpath = "(//div[text()='Position Category successfully deleted']")
+    private WebElement deleteMassageDP;
+
+
+
+
+
 
     @FindBy(xpath = "//mat-form-field//input[@data-placeholder='Name']") // locatorlarina bakiniz!
     private WebElement searchInput;
@@ -37,10 +69,28 @@ public class DialogContent extends Parent {
         clickFunction(deleteDialogBtn);
     }
 
-    public WebElement getWebElement(String button) {
-        switch (button) {
-            case "xxxx":
-                return xxxx;
+    public WebElement getWebElement(String strbutton) {
+        switch (strbutton) {
+            case "userName":
+                return userName;
+            case "password":
+                return password;
+            case "loginButton":
+                return loginButton;
+            case "addButtonDp":
+                return addButtonDp;
+            case "codeInputDP":
+                return codeInputDP;
+            case "nameInputDP":
+                return nameInputDP;
+            case "saveButtonDP":
+                return saveButtonDP;
+            case "editButtonDP":
+                return  editButtonDP;
+            case "trashButtonDP":
+                return  trashButtonDP;
+            case "deleteMassageDP":
+                return  deleteMassageDP;
 
         }
         return null;
