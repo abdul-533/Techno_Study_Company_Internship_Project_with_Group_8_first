@@ -13,5 +13,5 @@ Feature: Login Functionality
       And Click on element add buttons
       When create a name,short name and order complications
       Then Success message should be displayed
-
-
+      And Click to edit and delete button and change name,shortname
+      Then Success message should be displayed

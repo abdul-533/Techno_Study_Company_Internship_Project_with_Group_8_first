@@ -86,6 +86,12 @@ public class DialogContent extends Parent {
     @FindBy(xpath = "//ms-delete-button[@table='true']")
     public WebElement msgDeleteButton;
 
+    @FindBy(xpath = "//ms-edit-button[@table='true']//button")
+    private WebElement kuEditButton;
+
+    @FindBy(xpath = "//span[text()=' Delete ']")
+    public WebElement kuDelete;
+
     public void deleteItem(String searchText) {
         sendKeysFunction(searchInput, searchText);
         clickFunction(searchButton);
@@ -137,6 +143,7 @@ public class DialogContent extends Parent {
             case "orderAdd" : return orderAdd;
             case "nextPage" : return nextPage;
             case "diyezClick" : return diyezClick;
+            case "kuEditButton" : return kuEditButton;
         }
         return null;
     }

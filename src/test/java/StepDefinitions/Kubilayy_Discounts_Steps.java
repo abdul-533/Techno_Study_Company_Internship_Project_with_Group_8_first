@@ -46,10 +46,25 @@ public class Kubilayy_Discounts_Steps {
         dc.sendKeysFunction(dc.getWebElement("shortName"), shortName);
         dc.sendKeysFunction(dc.getWebElement("orderAdd"), orderAdd);
         dc.clickFunction(dc.getWebElement("saveButton"));
-
-        dc.clickFunction(dc.getWebElement("diyezClick"));
-        dc.clickFunction(dc.getWebElement("diyezClick"));
     }
+
+    @And("Click to edit and delete button and change name,shortname")
+    public void clickToEditAndDeleteButtonAndChangeNameShortname() {
+        String randomString = RandomStringUtils.randomAlphabetic(8);
+        String shortName = RandomStringUtils.randomAlphabetic(5);
+        String orderAdd = RandomStringUtils.randomNumeric(4);
+        dc.clickFunction(dc.getWebElement("diyezClick"));
+        dc.clickFunction(dc.getWebElement("diyezClick"));
+
+        dc.clickFunction(dc.getWebElement("kuEditButton"));
+        dc.sendKeysFunction(dc.getWebElement("nameInput"), randomString);
+        dc.sendKeysFunction(dc.getWebElement("shortName"), shortName);
+        dc.sendKeysFunction(dc.getWebElement("orderAdd"), orderAdd);
+        dc.clickFunction(dc.getWebElement("saveButton"));
+        dc.clickFunction(dc.msgDeleteButton);
+        dc.clickFunction(dc.kuDelete);
+    }
+
 }
 
 
