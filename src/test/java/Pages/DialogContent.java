@@ -7,6 +7,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.util.List;
+
 //POM: Page Object Model
 public class DialogContent extends Parent {
     public DialogContent() {
@@ -60,6 +62,32 @@ public class DialogContent extends Parent {
     @FindBy(xpath = "//span[text()=' Delete ']")
     private WebElement deleteDialogBtn;
 
+    @FindBy(xpath = "//ms-edit-button[@table='true']//button")
+    private WebElement kuEditButton;
+
+    @FindBy(xpath = "//span[text()=' Delete ']")
+    private WebElement kuDelete;
+
+    @FindBy(xpath = "//ms-integer-field[@formcontrolname='priority']/input")
+    private WebElement priority;
+
+    @FindBy(xpath = "//ms-text-field[@formcontrolname='shortName']/input")
+    private WebElement shortName;
+
+    @FindBy(xpath = "//ms-text-field[@formcontrolname='order']/input")
+    private WebElement orderAdd;
+
+    @FindBy(xpath = "(//button[@aria-label='Next Page'])[1]")
+    private WebElement nextPage;
+
+    @FindBy(xpath = "//div[@role='button']")
+    private WebElement diyezClick;
+
+    @FindBy(xpath = "//ms-delete-button[@table='true']")
+    public WebElement msgDeleteButton;
+
+    @FindBy(xpath = "//ms-text-field[@formcontrolname='description']")
+    private WebElement description;
     @FindBy(xpath = "//input[@placeholder='Username']")
     private WebElement usernameMersys;
 
@@ -85,6 +113,8 @@ public class DialogContent extends Parent {
     private WebElement deletedMessageHR;
 
 
+    @FindBy(xpath = "//ms-text-field[@id='ms-text-field-3']")
+    private WebElement integrationCod;
 
     public void deleteItem(String searchText) {
         sendKeysFunction(searchInput, searchText);
@@ -152,6 +182,16 @@ public class DialogContent extends Parent {
             case "deletedMessageHR":
                 return deletedMessageHR;
 
+            case "description" : return description;
+            case "integrationCod" : return integrationCod;
+            case "priority" : return priority;
+            case "shortName": return shortName;
+            case "orderAdd" : return orderAdd;
+            case "nextPage" : return nextPage;
+            case "diyezClick" : return diyezClick;
+            case "kuEditButton" : return kuEditButton;
+            case "msgDeleteButton" : return msgDeleteButton;
+            case "kuDelete"   : return kuDelete;
         }
         return null;
     }
