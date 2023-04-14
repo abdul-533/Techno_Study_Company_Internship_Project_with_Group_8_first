@@ -9,6 +9,7 @@ Feature: Add Edit Delete Positions from HR
     Then Click Add button in the Position Categories (Dialog Content)
     And Enter a new name from the new position category
     Then Click save button
+    And Click search button and search the name
     Then Click Edit button
     And After Edit Enter a new name from the new position category
     Then Click save button

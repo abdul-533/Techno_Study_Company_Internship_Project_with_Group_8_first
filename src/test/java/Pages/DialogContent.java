@@ -50,6 +50,11 @@ public class DialogContent extends Parent {
     private WebElement deleteBtnConfirmHR;
     @FindBy(xpath = "//div[text()='Position Category successfully deleted']")
     private WebElement deletedMessageHR;
+    @FindBy(xpath = "//input[@data-placeholder='Name']")
+    private WebElement SearchBarHR;
+    @FindBy(xpath = "//span[text()='Search']")
+    private WebElement SearchBtnHR;
+
 
 
 
@@ -84,6 +89,11 @@ public class DialogContent extends Parent {
                 return deleteBtnConfirmHR;
             case "deletedMessageHR":
                 return deletedMessageHR;
+            case "SearchBarHR":
+                return SearchBarHR;
+            case "SearchBtnHR":
+                return SearchBtnHR;
+
 
         }
         return null;

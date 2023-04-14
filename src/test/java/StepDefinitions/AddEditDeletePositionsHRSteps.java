@@ -13,9 +13,10 @@ import org.testng.Assert;
 import java.time.Duration;
 
 public class AddEditDeletePositionsHRSteps {
-    DialogContent dc=new DialogContent();
-    LeftNav  ln=new LeftNav();
-    WebDriverWait wait=new WebDriverWait(GWD.getDriver(), Duration.ofSeconds(30));
+    DialogContent dc = new DialogContent();
+    LeftNav ln = new LeftNav();
+    WebDriverWait wait = new WebDriverWait(GWD.getDriver(), Duration.ofSeconds(30));
+
     @Given("Navigate to test.mersys.io")
     public void navigateToTestMersysIo() {
         GWD.getDriver().get("https://test.mersys.io/");
@@ -23,8 +24,8 @@ public class AddEditDeletePositionsHRSteps {
 
     @Then("Enter username and password")
     public void enterUsernameAndPassword() {
-    dc.sendKeysFunction(dc.getWebElement("usernameMersys"),"turkeyts");
-    dc.sendKeysFunction(dc.getWebElement("passwordMersys"), "TechnoStudy123");
+        dc.sendKeysFunction(dc.getWebElement("usernameMersys"), "turkeyts");
+        dc.sendKeysFunction(dc.getWebElement("passwordMersys"), "TechnoStudy123");
     }
 
     @And("Click Login Button")
@@ -54,13 +55,20 @@ public class AddEditDeletePositionsHRSteps {
 
     @And("Enter a new name from the new position category")
     public void enterANewNameFromTheNewPositionCategory() {
-        dc.sendKeysFunction(dc.getWebElement("nameBoxHR"),"Group8Project");
+        dc.sendKeysFunction(dc.getWebElement("nameBoxHR"), "Group8Project");
     }
 
     @Then("Click save button")
     public void clickSaveButton() {
         dc.clickFunction(dc.getWebElement("SaveBtnHR"));
     }
+    @And("Click search button and search the name")
+    public void clickSearchButtonAndSearchTheName() {
+        dc.sendKeysFunction(dc.getWebElement("SearchBarHR"), "Group8Project" );
+        dc.clickFunction(dc.getWebElement("SearchBtnHR"));
+    }
+
+
 
     @Then("Click Edit button")
     public void clickEditButton() {
@@ -87,6 +95,7 @@ public class AddEditDeletePositionsHRSteps {
     @Then("User should see succesful information")
     public void userShouldSeeSuccesfulInformation() {
         Assert.assertTrue(dc.getWebElement("deletedMessageHR").getText().toLowerCase().contains("deleted"));
+
 
     }
 
