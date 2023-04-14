@@ -87,7 +87,7 @@ public class AddEditDeletePositionsHRSteps {
     @Then("User should see succesful information")
     public void userShouldSeeSuccesfulInformation() {
         Assert.assertTrue(dc.getWebElement("deletedMessageHR").getText().toLowerCase().contains("deleted"));
-        //adasd
+
     }
 
 
