@@ -60,6 +60,32 @@ public class DialogContent extends Parent {
     @FindBy(xpath = "//span[text()=' Delete ']")
     private WebElement deleteDialogBtn;
 
+    @FindBy(xpath = "//input[@placeholder='Username']")
+    private WebElement usernameMersys;
+
+    @FindBy(xpath = "//input[@placeholder='Password']")
+    private WebElement passwordMersys;
+
+    @FindBy(xpath = "//*[text()=' LOGIN ']")
+    private WebElement loginBtnMersys;
+
+    @FindBy(xpath = "//*[@data-icon='plus']")
+    private WebElement addBtnHR;
+    @FindBy(xpath = "(//input[@data-placeholder='Name'])[2]")
+    private WebElement nameBoxHR;
+    @FindBy(xpath = "//span[text()='Save']")
+    private WebElement SaveBtnHR;
+    @FindBy(xpath = "(//*[@data-icon='pen-to-square'])[1]")
+    private WebElement editBtnHR;
+    @FindBy(xpath = "(//*[@data-icon='trash-can'])[1]")
+    private WebElement deleteBtnHR;
+    @FindBy(xpath = "//span[text()=' Delete ']")
+    private WebElement deleteBtnConfirmHR;
+    @FindBy(xpath = "//div[text()='Position Category successfully deleted']")
+    private WebElement deletedMessageHR;
+
+
+
     public void deleteItem(String searchText) {
         sendKeysFunction(searchInput, searchText);
         clickFunction(searchButton);
@@ -68,6 +94,7 @@ public class DialogContent extends Parent {
         clickFunction(deleteImageBtn);
         clickFunction(deleteDialogBtn);
     }
+
 
     public void editItem(String searchText, String newName) {
         sendKeysFunction(searchInput, searchText);
@@ -104,6 +131,26 @@ public class DialogContent extends Parent {
             case "saveButton":
                 return saveButton;
             case "searchInput":return searchInput;
+            case "usernameMersys":
+                return usernameMersys;
+            case "passwordMersys":
+                return passwordMersys;
+            case "loginBtnMersys":
+                return loginBtnMersys;
+            case "addBtnHR":
+                return addBtnHR;
+            case "nameBoxHR":
+                return nameBoxHR;
+            case "SaveBtnHR":
+                return SaveBtnHR;
+            case "editBtnHR":
+                return editBtnHR;
+            case "deleteBtnHR":
+                return deleteBtnHR;
+            case "deleteBtnConfirmHR":
+                return deleteBtnConfirmHR;
+            case "deletedMessageHR":
+                return deletedMessageHR;
 
         }
         return null;
