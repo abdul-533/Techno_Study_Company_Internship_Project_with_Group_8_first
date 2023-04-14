@@ -60,31 +60,35 @@ public class DialogContent extends Parent {
     @FindBy(xpath = "//span[text()=' Delete ']")
     private WebElement deleteDialogBtn;
 
-    @FindBy(xpath = "//input[@placeholder='Username']")
-    private WebElement usernameMersys;
+    @FindBy(xpath = "//ms-edit-button[@table='true']//button")
+    private WebElement kuEditButton;
 
-    @FindBy(xpath = "//input[@placeholder='Password']")
-    private WebElement passwordMersys;
-
-    @FindBy(xpath = "//*[text()=' LOGIN ']")
-    private WebElement loginBtnMersys;
-
-    @FindBy(xpath = "//*[@data-icon='plus']")
-    private WebElement addBtnHR;
-    @FindBy(xpath = "(//input[@data-placeholder='Name'])[2]")
-    private WebElement nameBoxHR;
-    @FindBy(xpath = "//span[text()='Save']")
-    private WebElement SaveBtnHR;
-    @FindBy(xpath = "(//*[@data-icon='pen-to-square'])[1]")
-    private WebElement editBtnHR;
-    @FindBy(xpath = "(//*[@data-icon='trash-can'])[1]")
-    private WebElement deleteBtnHR;
     @FindBy(xpath = "//span[text()=' Delete ']")
-    private WebElement deleteBtnConfirmHR;
-    @FindBy(xpath = "//div[text()='Position Category successfully deleted']")
-    private WebElement deletedMessageHR;
+    private WebElement kuDelete;
 
+    @FindBy(xpath = "//ms-integer-field[@formcontrolname='priority']/input")
+    private WebElement priority;
 
+    @FindBy(xpath = "//ms-text-field[@formcontrolname='shortName']/input")
+    private WebElement shortName;
+
+    @FindBy(xpath = "//ms-text-field[@formcontrolname='order']/input")
+    private WebElement orderAdd;
+
+    @FindBy(xpath = "(//button[@aria-label='Next Page'])[1]")
+    private WebElement nextPage;
+
+    @FindBy(xpath = "//div[@role='button']")
+    private WebElement diyezClick;
+
+    @FindBy(xpath = "//ms-delete-button[@table='true']")
+    public WebElement msgDeleteButton;
+
+    @FindBy(xpath = "//ms-text-field[@formcontrolname='description']")
+    private WebElement description;
+
+    @FindBy(xpath = "//ms-text-field[@id='ms-text-field-3']")
+    private WebElement integrationCod;
 
     public void deleteItem(String searchText) {
         sendKeysFunction(searchInput, searchText);
@@ -94,7 +98,6 @@ public class DialogContent extends Parent {
         clickFunction(deleteImageBtn);
         clickFunction(deleteDialogBtn);
     }
-
 
     public void editItem(String searchText, String newName) {
         sendKeysFunction(searchInput, searchText);
@@ -131,27 +134,16 @@ public class DialogContent extends Parent {
             case "saveButton":
                 return saveButton;
             case "searchInput":return searchInput;
-            case "usernameMersys":
-                return usernameMersys;
-            case "passwordMersys":
-                return passwordMersys;
-            case "loginBtnMersys":
-                return loginBtnMersys;
-            case "addBtnHR":
-                return addBtnHR;
-            case "nameBoxHR":
-                return nameBoxHR;
-            case "SaveBtnHR":
-                return SaveBtnHR;
-            case "editBtnHR":
-                return editBtnHR;
-            case "deleteBtnHR":
-                return deleteBtnHR;
-            case "deleteBtnConfirmHR":
-                return deleteBtnConfirmHR;
-            case "deletedMessageHR":
-                return deletedMessageHR;
-
+            case "description" : return description;
+            case "integrationCod" : return integrationCod;
+            case "priority" : return priority;
+            case "shortName": return shortName;
+            case "orderAdd" : return orderAdd;
+            case "nextPage" : return nextPage;
+            case "diyezClick" : return diyezClick;
+            case "kuEditButton" : return kuEditButton;
+            case "msgDeleteButton" : return msgDeleteButton;
+            case "kuDelete"   : return kuDelete;
         }
         return null;
     }
