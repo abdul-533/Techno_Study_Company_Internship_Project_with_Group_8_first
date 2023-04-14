@@ -10,7 +10,7 @@ public class LeftNav extends Parent {
         PageFactory.initElements(GWD.getDriver(), this);
     }
 
-    @FindBy(xpath = "//fuse-nav-vertical-collapsable[@class='ng-tns-c106-7 nav-collapsable nav-item ng-star-inserted']")
+    @FindBy(xpath = "//span[text()='Setup']")
     private WebElement setup;
 
     @FindBy(xpath = "(//span[text()='Setup'])[1]")
