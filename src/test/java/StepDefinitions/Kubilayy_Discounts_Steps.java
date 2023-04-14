@@ -61,8 +61,8 @@ public class Kubilayy_Discounts_Steps {
         dc.sendKeysFunction(dc.getWebElement("shortName"), shortName);
         dc.sendKeysFunction(dc.getWebElement("orderAdd"), orderAdd);
         dc.clickFunction(dc.getWebElement("saveButton"));
-        dc.clickFunction(dc.msgDeleteButton);
-        dc.clickFunction(dc.kuDelete);
+        dc.clickFunction(dc.getWebElement("msgDeleteButton"));
+        dc.clickFunction(dc.getWebElement("kuDelete"));
     }
 
 }
