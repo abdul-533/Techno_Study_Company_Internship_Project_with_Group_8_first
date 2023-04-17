@@ -2,67 +2,58 @@ package StepDefinitions;
 import Pages.DialogContent;
 import Pages.LeftNav;
 import Utilities.GWD;
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import java.time.Duration;
+import java.util.List;
+
 public class _02_AddEditDeletePositionsDPSteps {
     DialogContent dc=new DialogContent();
     LeftNav  ln=new LeftNav();
-    @When("Click Setup from LeftNav")
-    public void clickSetupFromLeftNav(){
-        ln.clickFunction(ln.getWebElement("setup"));
-    }
-    @Then("Click SchoolSetup from LeftNav")
-    public void  ClickSchoolSetupFromLefNav(){
-        ln.clickFunction(ln.getWebElement("schoolSetup"));
 
-    }
 
-    @Then("Click Add button int the School Department")
-    public void clickAddButtonIntTheSchoolDepartment() {
-        ln.clickFunction(ln.getWebElement("addButtonDp"));
+    @Then("Click on the element in Dialog")
+    public void clickOnTheElementInDialog(DataTable dt) {
+        List<String> strButtons = dt.asList(String.class);
+
+        for (String strButton : strButtons) {
+            WebElement element = dc.getWebElement(strButton); // webelemnti bul
+            dc.clickFunction(element);
+        }
     }
 
-    @Then("Click Departments from LeftNav")
-    public void clickDepartmentsFromLeftNav() {
-        ln.clickFunction(ln.getWebElement("departments"));
+
+    @And("Click on the element LeftNav")
+    public void clickOnTheElementLeftNav(DataTable items) {
+        List<String> strButtons = items.asList(String.class);
+
+        for (String strButton : strButtons) {
+            WebElement element = ln.getWebElement(strButton); // webelemnti bul
+            ln.clickFunction(element); // webelemente tıklat
+        }
     }
 
-    @And("Enter a new name and code name from the School Deparment")
-    public void enterANewNameAndCodeNameFromTheSchoolDeparment() {
-        dc.sendKeysFunction(dc.getWebElement("nameInputDP"),"ty");
-        dc.sendKeysFunction(dc.getWebElement("codeInputDP"),"678");
+    @And("Enter a new name and code name in Dialog Content")
+    public void enterANewNameAndCodeNameInDialogContent(DataTable dt) {
+        List<List<String>> items = dt.asLists(String.class);
+
+        for (int i = 0; i < items.size(); i++) {
+            WebElement element = dc.getWebElement(items.get(i).get(0));
+            dc.sendKeysFunction(element, items.get(i).get(1));
+        }
     }
 
-    @And("Click save button")
-    public void clickSaveButton() {
-        dc.clickFunction(dc.getWebElement("saveButtonDP"));
-    }
-
-    @Then("Click edit button")
-    public void clickEditButton() {
-        dc.clickFunction(dc.getWebElement("editButtonDP"));
-    }
-
-    @And("After edit enter a new name and code name from the new School Department category")
-    public void afterEditEnterANewNameAndCodeNameFromTheNewSchoolDepartmentCategory() {
-        dc.sendKeysFunction(dc.getWebElement("nameInputDP"),"TC");
-        dc.sendKeysFunction(dc.getWebElement("codeInputDP"),"876");
-    }
-
-    @Then("click delete button")
-    public void clickDeleteButton() {
-        dc.clickFunction(dc.getWebElement("trashButtonDP"));
-    }
-
-    @And("User should see succesfull information")
-    public void userShouldSeeSuccesfullInformation() {
-        Assert.assertTrue(dc.getWebElement("deletedMessageDP").getText().toLowerCase().contains("deleted"));
+    @And("User should see succesfully information")
+    public void userShouldSeeSuccesfullyInformation() {
+        dc.verifyContainsTextFunction(dc.deleteMassageDP,"deleted");
     }
 }
+

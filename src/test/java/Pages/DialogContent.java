@@ -31,7 +31,7 @@ public class DialogContent extends Parent {
     @FindBy(xpath = "//*[@data-placeholder='Code']")
     private WebElement codeInputDP;
 
-    @FindBy(xpath = "//button[@class='mat-focus-indicator mat-tooltip-trigger mat-accent mat-button mat-raised-button mat-button-base ng-star-inserted']")
+    @FindBy(xpath = "//span[text()='Save']")
     private WebElement saveButtonDP;
 
     @FindBy(xpath = "(//*[@data-icon='pen-to-square'])[1]")
@@ -39,11 +39,17 @@ public class DialogContent extends Parent {
 
     @FindBy(xpath = "(//*[@data-icon='trash-can'])[1]")
     private WebElement trashButtonDP;
+    @FindBy(xpath = "//span[text()=' Delete ']")
+    private WebElement deleteButtonDP;
 
-    @FindBy(xpath = "(//div[text()='Position Category successfully deleted']")
-    private WebElement deleteMassageDP;
+    @FindBy(xpath = "//div[text()='School Department successfully deleted']")
+    public WebElement deleteMassageDP;
 
+    @FindBy(xpath = "//div [text()=' # ']")
+    private WebElement sortDP;
 
+    @FindBy(xpath = "//*[@data-icon='plus']")
+    private WebElement addSchoolDp;
 
 
 
@@ -91,6 +97,13 @@ public class DialogContent extends Parent {
                 return  trashButtonDP;
             case "deleteMassageDP":
                 return  deleteMassageDP;
+            case "sortDP":
+                return  sortDP;
+            case "addSchoolDp":
+                return   addSchoolDp;
+            case "deleteButtonDP":
+                return   deleteButtonDP;
+
 
         }
         return null;
