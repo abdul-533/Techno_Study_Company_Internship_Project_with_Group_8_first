@@ -84,6 +84,9 @@ public class DialogContent extends Parent {
     @FindBy(xpath = "//ms-text-field[@id='ms-text-field-3']")
     private WebElement integrationCod;
 
+    @FindBy(xpath = "//span[text()='Active']")
+    private WebElement activeButton;
+
     public void deleteItem(String searchText) {
         sendKeysFunction(searchInput, searchText);
         clickFunction(searchButton);
@@ -129,6 +132,7 @@ public class DialogContent extends Parent {
             case "editButton" : return editButton;  
             case "deleteImageBtn" : return deleteImageBtn;
             case "deleteDialogBtn" : return deleteDialogBtn;
+            case "activeButton" : return activeButton;
     
         }
         return null;

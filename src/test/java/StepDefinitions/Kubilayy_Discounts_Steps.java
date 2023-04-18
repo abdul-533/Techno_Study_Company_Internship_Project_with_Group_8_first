@@ -22,8 +22,8 @@ public class Kubilayy_Discounts_Steps {
     LeftNav ln = new LeftNav();
     DialogContent dc = new DialogContent();
 
-    @When("User navigate to discounts")
-    public void userNavigateToDiscounts(DataTable items) {
+    @When("User navigate to GradeLevels")
+    public void userNavigateToGradeLevels(DataTable items) {
         List<String> itemList = items.asList(String.class);
         for (String il : itemList) {
             ln.clickFunction(ln.getWebElement(il));
@@ -45,6 +45,7 @@ public class Kubilayy_Discounts_Steps {
         dc.sendKeysFunction(dc.getWebElement("nameInput"), randomString);
         dc.sendKeysFunction(dc.getWebElement("shortName"), shortName);
         dc.sendKeysFunction(dc.getWebElement("orderAdd"), orderAdd);
+        Assert.assertTrue(dc.getWebElement("activeButton").isDisplayed(), "not found");
         dc.clickFunction(dc.getWebElement("saveButton"));
     }
 
@@ -56,7 +57,7 @@ public class Kubilayy_Discounts_Steps {
         dc.clickFunction(dc.getWebElement("diyezClick"));
         dc.clickFunction(dc.getWebElement("diyezClick"));
 
-        dc.clickFunction(dc.getWebElement("kuEditButton"));
+        dc.clickFunction(dc.getWebElement("editButton"));
         dc.sendKeysFunction(dc.getWebElement("nameInput"), randomString);
         dc.sendKeysFunction(dc.getWebElement("shortName"), shortName);
         dc.sendKeysFunction(dc.getWebElement("orderAdd"), orderAdd);

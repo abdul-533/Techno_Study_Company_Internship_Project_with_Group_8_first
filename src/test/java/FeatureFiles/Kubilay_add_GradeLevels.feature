@@ -6,7 +6,7 @@ Feature: Login Functionality
     Then User should login successfully
 
     Scenario: Create discounts account, add,edit and delete this account
-      When User navigate to discounts
+      When User navigate to GradeLevels
       | setup |
       | parameters |
       | gradeLevels  |
