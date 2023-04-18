@@ -26,6 +26,7 @@ public class DialogContent extends Parent {
 
     @FindBy(css = "span[class='mat-tooltip-trigger logo-text']")
     private WebElement txtTechnoStudy;
+    
     @FindBy(xpath = "//ms-add-button[contains(@tooltip,'ADD')]//button")
     private WebElement addButton;
 
@@ -61,13 +62,7 @@ public class DialogContent extends Parent {
 
     @FindBy(xpath = "//span[text()=' Delete ']")
     private WebElement deleteDialogBtn;
-
-    @FindBy(xpath = "//ms-edit-button[@table='true']//button")
-    private WebElement kuEditButton;
-
-    @FindBy(xpath = "//span[text()=' Delete ']")
-    private WebElement kuDelete;
-
+ 
     @FindBy(xpath = "//ms-integer-field[@formcontrolname='priority']/input")
     private WebElement priority;
 
@@ -83,35 +78,8 @@ public class DialogContent extends Parent {
     @FindBy(xpath = "//div[@role='button']")
     private WebElement diyezClick;
 
-    @FindBy(xpath = "//ms-delete-button[@table='true']")
-    public WebElement msgDeleteButton;
-
     @FindBy(xpath = "//ms-text-field[@formcontrolname='description']")
     private WebElement description;
-    @FindBy(xpath = "//input[@placeholder='Username']")
-    private WebElement usernameMersys;
-
-    @FindBy(xpath = "//input[@placeholder='Password']")
-    private WebElement passwordMersys;
-
-    @FindBy(xpath = "//*[text()=' LOGIN ']")
-    private WebElement loginBtnMersys;
-
-    @FindBy(xpath = "//*[@data-icon='plus']")
-    private WebElement addBtnHR;
-    @FindBy(xpath = "(//input[@data-placeholder='Name'])[2]")
-    private WebElement nameBoxHR;
-    @FindBy(xpath = "//span[text()='Save']")
-    private WebElement SaveBtnHR;
-    @FindBy(xpath = "(//*[@data-icon='pen-to-square'])[1]")
-    private WebElement editBtnHR;
-    @FindBy(xpath = "(//*[@data-icon='trash-can'])[1]")
-    private WebElement deleteBtnHR;
-    @FindBy(xpath = "//span[text()=' Delete ']")
-    private WebElement deleteBtnConfirmHR;
-    @FindBy(xpath = "//div[text()='Position Category successfully deleted']")
-    private WebElement deletedMessageHR;
-
 
     @FindBy(xpath = "//ms-text-field[@id='ms-text-field-3']")
     private WebElement integrationCod;
@@ -138,60 +106,30 @@ public class DialogContent extends Parent {
 
     public WebElement getWebElement(String button) {
         switch (button) {
-            case "userName":
-                return userName;
-            case "password":
-                return password;
-            case "loginButton":
-                return loginButton;
-            case "txtTechnoStudy":
-                return txtTechnoStudy;
-            case "addButton":
-                return addButton;
-            case "nameInput":
-                return nameInput;
-            case "currencyInput":
-                return currencyInput;
-            case "ibanInput":
-                return ibanInput;
-            case "integCodeInput":
-                return integCodeInput;
-            case "successMsg":
-                return successMsg;
-            case "saveButton":
-                return saveButton;
+            case "userName":return userName;
+            case "password":return password;
+            case "loginButton":return loginButton;
+            case "txtTechnoStudy":return txtTechnoStudy;
+            case "addButton":return addButton;
+            case "nameInput":return nameInput;
+            case "currencyInput":return currencyInput;
+            case "ibanInput":return ibanInput;
+            case "integCodeInput":return integCodeInput;
+            case "successMsg":return successMsg;
+            case "saveButton":return saveButton;
+            case "searchButton":return searchButton; 
             case "searchInput":return searchInput;
-            case "usernameMersys":
-                return usernameMersys;
-            case "passwordMersys":
-                return passwordMersys;
-            case "loginBtnMersys":
-                return loginBtnMersys;
-            case "addBtnHR":
-                return addBtnHR;
-            case "nameBoxHR":
-                return nameBoxHR;
-            case "SaveBtnHR":
-                return SaveBtnHR;
-            case "editBtnHR":
-                return editBtnHR;
-            case "deleteBtnHR":
-                return deleteBtnHR;
-            case "deleteBtnConfirmHR":
-                return deleteBtnConfirmHR;
-            case "deletedMessageHR":
-                return deletedMessageHR;
-
             case "description" : return description;
             case "integrationCod" : return integrationCod;
             case "priority" : return priority;
             case "shortName": return shortName;
             case "orderAdd" : return orderAdd;
             case "nextPage" : return nextPage;
-            case "diyezClick" : return diyezClick;
-            case "kuEditButton" : return kuEditButton;
-            case "msgDeleteButton" : return msgDeleteButton;
-            case "kuDelete"   : return kuDelete;
+            case "diyezClick" : return diyezClick;   
+            case "editButton" : return editButton;  
+            case "deleteImageBtn" : return deleteImageBtn;
+            case "deleteDialogBtn" : return deleteDialogBtn;
+    
         }
         return null;
     }
