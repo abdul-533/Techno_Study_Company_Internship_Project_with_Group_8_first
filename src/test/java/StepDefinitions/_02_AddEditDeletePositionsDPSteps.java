@@ -55,5 +55,20 @@ public class _02_AddEditDeletePositionsDPSteps {
     public void userShouldSeeSuccesfullyInformation() {
         dc.verifyContainsTextFunction(dc.deleteMassageDP,"deleted");
     }
+
+    @And("User should see succesfully created")
+    public void userShouldSeeSuccesfullyCreated() {dc.verifyContainsTextFunction(dc.createdMassageDP,"created");
+
+    }
+
+    @And("User should see succesfully error")
+    public void userShouldSeeSuccesfullyError() {dc.verifyContainsTextFunction(dc.errorMassageDP,"name!");
+
+    }
+
+    @And("User should see succesfully updated")
+    public void userShouldSeeSuccesfullyUpdated() {
+        dc.verifyContainsTextFunction(dc.updatedMassageDP,"successfully updated");
+    }
 }
 

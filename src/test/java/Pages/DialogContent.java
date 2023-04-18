@@ -26,16 +26,16 @@ public class DialogContent extends Parent {
     private WebElement addButtonDp;
 
     @FindBy(xpath = "//*[@data-placeholder='Name']")
-    private WebElement nameInputDP;
+    private WebElement nameInput;
 
     @FindBy(xpath = "//*[@data-placeholder='Code']")
     private WebElement codeInputDP;
 
     @FindBy(xpath = "//span[text()='Save']")
-    private WebElement saveButtonDP;
+    private WebElement saveButton;
 
     @FindBy(xpath = "(//*[@data-icon='pen-to-square'])[1]")
-    private WebElement editButtonDP;
+    private WebElement editButton;
 
     @FindBy(xpath = "(//*[@data-icon='trash-can'])[1]")
     private WebElement trashButtonDP;
@@ -44,6 +44,14 @@ public class DialogContent extends Parent {
 
     @FindBy(xpath = "//div[text()='School Department successfully deleted']")
     public WebElement deleteMassageDP;
+    @FindBy(xpath = "//div[@class='hot-toast-bar-base']")
+    public WebElement createdMassageDP;
+
+    @FindBy(xpath = "//div[text()='There is already Department with \"tyy\" name!']")
+    public WebElement errorMassageDP;
+
+    @FindBy(xpath ="//div[text()='School Department successfully updated']")
+    public WebElement updatedMassageDP;
 
     @FindBy(xpath = "//div [text()=' # ']")
     private WebElement sortDP;
@@ -74,6 +82,15 @@ public class DialogContent extends Parent {
         clickFunction(deleteImageBtn);
         clickFunction(deleteDialogBtn);
     }
+    public void editItem(String searchText, String newName) {
+        sendKeysFunction(searchInput, searchText);
+        clickFunction(searchButton);
+
+        wait.until(ExpectedConditions.numberOfElementsToBe(By.xpath("//fuse-progress-bar/*"), 0));
+        clickFunction(editButton);
+        sendKeysFunction(nameInput, newName);
+        clickFunction(saveButton);
+    }
 
     public WebElement getWebElement(String strbutton) {
         switch (strbutton) {
@@ -87,12 +104,12 @@ public class DialogContent extends Parent {
                 return addButtonDp;
             case "codeInputDP":
                 return codeInputDP;
-            case "nameInputDP":
-                return nameInputDP;
-            case "saveButtonDP":
-                return saveButtonDP;
-            case "editButtonDP":
-                return  editButtonDP;
+            case "nameInput":
+                return nameInput;
+            case "saveButton":
+                return saveButton;
+            case "editButton":
+                return  editButton;
             case "trashButtonDP":
                 return  trashButtonDP;
             case "deleteMassageDP":
@@ -103,8 +120,6 @@ public class DialogContent extends Parent {
                 return   addSchoolDp;
             case "deleteButtonDP":
                 return   deleteButtonDP;
-
-
         }
         return null;
     }
