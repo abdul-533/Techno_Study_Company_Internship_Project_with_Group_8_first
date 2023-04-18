@@ -7,7 +7,7 @@ Feature: Login Functionality
 
     Scenario: Create discounts account, add,edit and delete this account
       When User navigate to discounts
-      | setupK |
+      | setup |
       | parameters |
       | gradeLevels  |
       And Click on element add buttons
