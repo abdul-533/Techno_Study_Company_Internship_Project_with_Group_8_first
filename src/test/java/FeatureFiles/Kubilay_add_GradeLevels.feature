@@ -5,8 +5,34 @@ Feature: Login Functionality
     And Enter walid username as "turkeyts", password as "TechnoStudy123 " and click to login button
     Then User should login successfully
 
+    Scenario: Positive Test Case
+      When User navigate to GradeLevels
+        | setup |
+        | parameters |
+        | gradeLevels  |
+      And Click on element add buttons
+      And create a name,short name, order
+        | nameInput | kubil22 |
+        | shortName | kuku122 |
+        | orderAdd |  34123  |
+      And Click to save button
+      Then Success message should be displayed
+
+      Scenario: Negative Test Case
+        When User navigate to GradeLevels
+          | setup |
+          | parameters |
+          | gradeLevels  |
+        And Click on element add buttons
+        And create a name,short name, order
+          | nameInput | kubil22 |
+          | shortName | kuku122 |
+          | orderAdd |  34123  |
+        And Click to save button
+        Then Default message should be displayed
+
     Scenario: Create discounts account, add,edit and delete this account
-      When User navigate to discounts
+      When User navigate to GradeLevels
       | setup |
       | parameters |
       | gradeLevels  |
