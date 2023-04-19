@@ -78,10 +78,10 @@ public class DialogContent extends Parent {
     @FindBy(xpath = "//div[@role='button']")
     private WebElement diyezClick;
 
-    @FindBy(xpath = "//ms-text-field[@formcontrolname='description']")
+    @FindBy(xpath = "//ms-text-field[@formcontrolname='description']//input")
     private WebElement description;
 
-    @FindBy(xpath = "//ms-text-field[@id='ms-text-field-3']")
+    @FindBy(xpath = "//ms-text-field[@id='ms-text-field-3']//input")
     private WebElement integrationCod;
 
     @FindBy(xpath = "//span[text()='Active']")
@@ -93,6 +93,8 @@ public class DialogContent extends Parent {
     public WebElement mentor;
     @FindBy(xpath = "//*[text()='The Position Category with Name \"Mentor\" already exists.']")
     public WebElement alreadyExistsMsg;
+    @FindBy(xpath = "//ms-text-field[@id='ms-text-field-0']//input")
+    private WebElement descriptionSearch;
 
     public void deleteItem(String searchText) {
         sendKeysFunction(searchInput, searchText);
@@ -141,10 +143,12 @@ public class DialogContent extends Parent {
             case "deleteDialogBtn" : return deleteDialogBtn;
             case "activeButton" : return activeButton;
             case "alreadyExists" : return alreadyExists;
+            case "descriptionSearch" : return descriptionSearch;
 
         }
         return null;
     }
+
 
 
 }
