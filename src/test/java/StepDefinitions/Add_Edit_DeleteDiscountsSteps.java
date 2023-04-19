@@ -27,6 +27,7 @@ public class Add_Edit_DeleteDiscountsSteps {
 
         for (int i = 0; i < items.size(); i++) {
             dc.sendKeysFunction(dc.getWebElement(items.get(i).get(0)), items.get(i).get(1));
+
         }
 
 
@@ -38,6 +39,8 @@ public class Add_Edit_DeleteDiscountsSteps {
 
         for (int i = 0; i < items.size(); i++) {
             dc.editItem("TechnoStudyGR8", items.get(i).get(1));
+
+
         }
     }
 

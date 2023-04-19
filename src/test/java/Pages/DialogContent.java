@@ -26,7 +26,7 @@ public class DialogContent extends Parent {
 
     @FindBy(css = "span[class='mat-tooltip-trigger logo-text']")
     private WebElement txtTechnoStudy;
-    
+
     @FindBy(xpath = "//ms-add-button[contains(@tooltip,'ADD')]//button")
     private WebElement addButton;
 
@@ -62,7 +62,7 @@ public class DialogContent extends Parent {
 
     @FindBy(xpath = "//span[text()=' Delete ']")
     private WebElement deleteDialogBtn;
- 
+
     @FindBy(xpath = "//ms-integer-field[@formcontrolname='priority']/input")
     private WebElement priority;
 
@@ -83,6 +83,12 @@ public class DialogContent extends Parent {
 
     @FindBy(xpath = "//ms-text-field[@id='ms-text-field-3']")
     private WebElement integrationCod;
+
+    @FindBy(xpath = "//span[text()='Active']")
+    private WebElement activeButton;
+
+    @FindBy(xpath = "//div[contains(text(),'already exists.')]")
+    private WebElement alreadyExists;
     @FindBy(xpath = "//*[text()='Mentor']")
     public WebElement mentor;
     @FindBy(xpath = "//*[text()='The Position Category with Name \"Mentor\" already exists.']")
@@ -121,7 +127,7 @@ public class DialogContent extends Parent {
             case "integCodeInput":return integCodeInput;
             case "successMsg":return successMsg;
             case "saveButton":return saveButton;
-            case "searchButton":return searchButton; 
+            case "searchButton":return searchButton;
             case "searchInput":return searchInput;
             case "description" : return description;
             case "integrationCod" : return integrationCod;
@@ -129,12 +135,13 @@ public class DialogContent extends Parent {
             case "shortName": return shortName;
             case "orderAdd" : return orderAdd;
             case "nextPage" : return nextPage;
-            case "diyezClick" : return diyezClick;   
-            case "editButton" : return editButton;  
+            case "diyezClick" : return diyezClick;
+            case "editButton" : return editButton;
             case "deleteImageBtn" : return deleteImageBtn;
             case "deleteDialogBtn" : return deleteDialogBtn;
+            case "activeButton" : return activeButton;
+            case "alreadyExists" : return alreadyExists;
 
-    
         }
         return null;
     }
