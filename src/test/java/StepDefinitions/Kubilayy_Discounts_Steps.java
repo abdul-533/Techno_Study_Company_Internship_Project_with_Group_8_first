@@ -4,7 +4,9 @@ import Pages.DialogContent;
 import Pages.LeftNav;
 import Utilities.GWD;
 import io.cucumber.datatable.DataTable;
+import io.cucumber.java.bs.A;
 import io.cucumber.java.en.And;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.cucumber.java.ht.Le;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -28,6 +30,17 @@ public class Kubilayy_Discounts_Steps {
         for (String il : itemList) {
             ln.clickFunction(ln.getWebElement(il));
         }
+    }
+    @And("create a name,short name, order")
+    public void createANameShortNameOrder(DataTable items) {
+         List<List<String>> itemsAll = items.asLists(String.class);
+        for (int i = 0; i <itemsAll.size() ; i++) {
+            dc.sendKeysFunction(dc.getWebElement(itemsAll.get(i).get(0)), itemsAll.get(i).get(1));
+        }
+    }
+    @Then("Default message should be displayed")
+    public void defaultMessageShouldBeDisplayed() {
+        dc.verifyContainsTextFunction(dc.getWebElement("alreadyExists"), "already exists.");
     }
 
     @And("Click on element add buttons")

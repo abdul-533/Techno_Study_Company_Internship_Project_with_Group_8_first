@@ -87,6 +87,9 @@ public class DialogContent extends Parent {
     @FindBy(xpath = "//span[text()='Active']")
     private WebElement activeButton;
 
+    @FindBy(xpath = "//div[contains(text(),'already exists.')]")
+    private WebElement alreadyExists;
+
     public void deleteItem(String searchText) {
         sendKeysFunction(searchInput, searchText);
         clickFunction(searchButton);
@@ -133,6 +136,7 @@ public class DialogContent extends Parent {
             case "deleteImageBtn" : return deleteImageBtn;
             case "deleteDialogBtn" : return deleteDialogBtn;
             case "activeButton" : return activeButton;
+            case "alreadyExists" : return alreadyExists;
     
         }
         return null;
