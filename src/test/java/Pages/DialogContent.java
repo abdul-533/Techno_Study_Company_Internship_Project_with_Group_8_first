@@ -83,6 +83,10 @@ public class DialogContent extends Parent {
 
     @FindBy(xpath = "//ms-text-field[@id='ms-text-field-3']")
     private WebElement integrationCod;
+    @FindBy(xpath = "//*[text()='Mentor']")
+    public WebElement mentor;
+    @FindBy(xpath = "//*[text()='The Position Category with Name \"Mentor\" already exists.']")
+    public WebElement alreadyExistsMsg;
 
     public void deleteItem(String searchText) {
         sendKeysFunction(searchInput, searchText);
@@ -129,6 +133,7 @@ public class DialogContent extends Parent {
             case "editButton" : return editButton;  
             case "deleteImageBtn" : return deleteImageBtn;
             case "deleteDialogBtn" : return deleteDialogBtn;
+
     
         }
         return null;
