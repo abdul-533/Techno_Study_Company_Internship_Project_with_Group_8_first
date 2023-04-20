@@ -96,6 +96,9 @@ public class DialogContent extends Parent {
     @FindBy(xpath = "//ms-text-field[@id='ms-text-field-0']//input")
     private WebElement descriptionSearch;
 
+    @FindBy(xpath = "//*[@data-icon='square-xmark']")
+    private WebElement closeMarkDiscounts;
+
     public void deleteItem(String searchText) {
         sendKeysFunction(searchInput, searchText);
         clickFunction(searchButton);
@@ -144,6 +147,7 @@ public class DialogContent extends Parent {
             case "activeButton" : return activeButton;
             case "alreadyExists" : return alreadyExists;
             case "descriptionSearch" : return descriptionSearch;
+            case "closeMarkDiscounts" : return closeMarkDiscounts;
 
         }
         return null;

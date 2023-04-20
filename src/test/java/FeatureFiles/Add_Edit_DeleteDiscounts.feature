@@ -36,3 +36,26 @@ Feature:  Add-Edit-Delete Discounts under Parameters Setup
       | discounts  |
     Then Click to delete button Discounts
     Then Success message should be displayed
+
+  Scenario: Negative Test 1
+    When User navigate to discounts Alperen
+      | setup      |
+      | parameters |
+      | discounts  |
+    Then Click on element add button
+    And  User should enter necessary informations to the new discounts
+      | description    | !  |
+      | integrationCod | 35 |
+      | priority       | 53 |
+    Then Click to save button
+    And already exists message should be displayed Discount
+
+    Scenario: Positive Test 1
+      When User navigate to discounts Alperen
+        | setup      |
+        | parameters |
+        | discounts  |
+      Then Click on element add button
+      And Click on close button
+      And  user should verify he successfully cancelled adding item
+

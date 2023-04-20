@@ -10,6 +10,7 @@ import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 import java.time.Duration;
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
 public class Add_Edit_DeleteDiscountsSteps {
     LeftNav ln = new LeftNav();
     DialogContent dc = new DialogContent();
+    WebDriverWait wait = new WebDriverWait(GWD.getDriver(), Duration.ofSeconds(30));
 
 
     @When("User navigate to discounts Alperen")
@@ -42,7 +44,7 @@ public class Add_Edit_DeleteDiscountsSteps {
 
     @Then("Click to edit button and change name discounts")
     public void clickToEditButtonAndChangeNameDiscounts(DataTable dt) {
-        dc.sendKeysFunction(dc.getWebElement("descriptionSearch"),"TechnoStudyGR9");
+        dc.sendKeysFunction(dc.getWebElement("descriptionSearch"), "TechnoStudyGR9");
         dc.clickFunction(dc.getWebElement("searchButton"));
         dc.clickFunction(dc.getWebElement("editButton"));
         List<List<String>> items = dt.asLists(String.class);
@@ -55,11 +57,28 @@ public class Add_Edit_DeleteDiscountsSteps {
     @Then("Click to delete button Discounts")
     public void clickToDeleteButtonDiscounts() {
 
-        dc.sendKeysFunction(dc.getWebElement("descriptionSearch"),"TechnoStudyGR99");
+        dc.sendKeysFunction(dc.getWebElement("descriptionSearch"), "TechnoStudyGR99");
         dc.clickFunction(dc.getWebElement("searchButton"));
         WebDriverWait wait = new WebDriverWait(GWD.getDriver(), Duration.ofSeconds(30));
         wait.until(ExpectedConditions.textToBe(By.cssSelector("div[fxlayoutalign='center center'][class='control-full']"), "Search"));
         dc.clickFunction(dc.getWebElement("deleteImageBtn"));
         dc.clickFunction(dc.getWebElement("deleteDialogBtn"));
+    }
+
+    @And("already exists message should be displayed Discount")
+    public void alreadyExistsMessageShouldBeDisplayedDiscount() {
+        wait.until(ExpectedConditions.visibilityOf(dc.getWebElement("alreadyExists")));
+        Assert.assertTrue(dc.getWebElement("alreadyExists").isDisplayed());
+    }
+
+    @And("Click on close button")
+    public void clickOnCloseButton() {
+        dc.clickFunction(dc.getWebElement("closeMarkDiscounts"));
+    }
+
+    @And("user should verify he successfully cancelled adding item")
+    public void userShouldVerifyHeSuccessfullyCancelledAddingItem() {
+        wait.until(ExpectedConditions.elementToBeClickable(dc.getWebElement("addButton")));
+        Assert.assertTrue(dc.getWebElement("addButton").isDisplayed());
     }
 }
