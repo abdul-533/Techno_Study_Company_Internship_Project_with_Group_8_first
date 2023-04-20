@@ -94,9 +94,11 @@ public class DialogContent extends Parent {
     @FindBy(xpath = "//div[text()=' There is no data to display ']")
     private WebElement thereISNoDate;
 
+    @FindBy(xpath ="//mat-select[@formcontrolname='attachmentStages']")    //
+    private WebElement stage;
 
-
-
+    @FindBy(xpath = "//mat-form-field[@appearance='outline']//textarea")  //
+    private WebElement documentDescription;
 
 
     public void deleteItem(String searchText) {
@@ -147,6 +149,8 @@ public class DialogContent extends Parent {
             case "activeButton" : return activeButton;
             case "alreadyExists" : return alreadyExists;
             case "thereISNoDate": return thereISNoDate;
+            case "stage": return stage;
+            case "documentDescription": return documentDescription;
         }
         return null;
     }
