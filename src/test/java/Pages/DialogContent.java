@@ -119,6 +119,12 @@ public class DialogContent extends Parent {
     @FindBy(xpath = "//mat-form-field[@appearance='outline']//textarea")  //
     private WebElement documentDescription;
 
+    @FindBy(xpath = "(//mat-select[@role='combobox'])[2]")
+    private WebElement locationType;
+
+    @FindBy(xpath = "//ms-integer-field[@formcontrolname='capacity']//input")
+    private WebElement capacity;
+
 
     public void deleteItem(String searchText) {
         sendKeysFunction(searchInput, searchText);
@@ -177,6 +183,8 @@ public class DialogContent extends Parent {
             case "thereISNoDate": return thereISNoDate;
             case "stage": return stage;
             case "documentDescription": return documentDescription;
+            case "locationType":return locationType;
+            case "capacity":return capacity;
 
         }
         return null;
