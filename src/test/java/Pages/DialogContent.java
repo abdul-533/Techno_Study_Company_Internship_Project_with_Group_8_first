@@ -39,7 +39,7 @@ public class DialogContent extends Parent {
     @FindBy(xpath = "//mat-select[@formcontrolname='currency']")
     private WebElement currencyInput;
 
-    @FindBy(xpath = "//ms-text-field[@formcontrolname='integrationCode']/input")
+    @FindBy(xpath = "//ms-text-field[contains(@placeholder,'CODE')]/input")
     private WebElement integCodeInput;
 
     @FindBy(xpath = "//span[text()='Save']")
