@@ -40,10 +40,10 @@ public class HandeSteps {
         dc.clickFunction(dc.getWebElement("saveButton"));
     }
 
-    @Then("Success message should be displayed")
-    public void successMessageShouldBeDisplayed() {
-        dc.verifyContainsTextFunction(dc.getWebElement("successMsg"), "successfully");
-    }
+//    @Then("Success message should be displayed")
+//    public void successMessageShouldBeDisplayed() {
+//        dc.verifyContainsTextFunction(dc.getWebElement("successMsg"), "successfully");
+//    }
 
 //    @And("Click sign out")
 //    public void clickSignOut() {
@@ -54,7 +54,7 @@ public class HandeSteps {
     //    The Position with Name "hhh" already exists.
     @Then("Already exist should be displayed")
     public void alreadyExistShouldBeDisplayed() {
-        dc.verifyContainsTextFunction(dc.getWebElement("alreadyExist"),"already exists");
+        dc.verifyContainsTextFunction(dc.getWebElement("successMsg"),"already exists");
     }
 
     @And("Search name and click edit button and change name")
