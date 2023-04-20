@@ -11,9 +11,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.security.Key;
+import java.time.Duration;
 import java.util.List;
 
 public class _02_Bank_Account_Abdul {
@@ -35,7 +38,7 @@ public class _02_Bank_Account_Abdul {
 
     }
 
-    @And("Enter name,IBAM,currency and integration code")
+    @And("Enter required information")
     public void enterNameIBAMCurrencyAndIntegrationCode(DataTable dt) {
         List<List<String>> items = dt.asLists(String.class);
 
@@ -57,15 +60,27 @@ public class _02_Bank_Account_Abdul {
         dc.verifyContainsTextFunction(dc.getWebElement("successMsg"), "success");
     }
 
-    @And("Click to edit button and change name")
-    public void clickToEditButtonAndChangeName(DataTable dt) {
+    @And("Click to edit button and change inputs")
+    public void clickToEditButtonAndChangeInputs(DataTable dt) {
+        dc.sendKeysFunction(dc.getWebElement("searchInput"), "Group_8");
+        Actions ac1 = new Actions(GWD.getDriver());
+        ac1.sendKeys(Keys.ENTER).build().perform();
+
+        dc.editButton.click();
 
         List<List<String>> items = dt.asLists(String.class);
 
         for (int i = 0; i < items.size(); i++) {
-            dc.editItem("Ali-533", items.get(i).get(1));
+            dc.sendKeysFunction(dc.getWebElement(items.get(i).get(0)), items.get(i).get(1));
         }
+        dc.clickFunction(dc.getWebElement("currencyInput"));
+        Actions ac = new Actions(GWD.getDriver());
+        for (int i = 0; i < 3; i++) {
+            ac.sendKeys(Keys.DOWN).build().perform();
+        }
+        ac.sendKeys(Keys.ENTER).build().perform();
 
+        //dc.clickFunction(dc.getWebElement("saveButton"));
     }
 
     @And("Click to delete button")
@@ -76,5 +91,34 @@ public class _02_Bank_Account_Abdul {
             dc.deleteItem(strDeleteText);
         }
     }
+
+    @Then("Unsuccessful message should be displayed")
+    public void unsuccessfulMessageShouldBeDisplayed() {
+        dc.verifyContainsTextFunction(dc.getWebElement("successMsg"), "already exists");
+    }
+
+    @And("Click to search button")
+    public void clickToSearchButton(DataTable dt) {
+
+        List<List<String>> items = dt.asLists(String.class);
+
+        for (int i = 0; i < items.size(); i++) {
+            dc.sendKeysFunction(dc.getWebElement(items.get(i).get(0)), items.get(i).get(1));
+        }
+
+        Actions ac1 = new Actions(GWD.getDriver());
+        ac1.sendKeys(Keys.ENTER).build().perform();
+    //    dc.clickFunction(dc.getWebElement("searchButton"));
+    }
+
+    @Then("There is no date message should be displayed")
+    public void thereIsNoDateMessageShouldBeDisplayed() {
+        dc.verifyContainsTextFunction(dc.getWebElement("thereISNoDate"), "There is no data to display");
+
+    }
 }
 
+/*
+     WebDriverWait wait = new WebDriverWait(BaseDriver.getDriver(), Duration.ofSeconds(30));
+        wait.until(ExpectedConditions.textToBe(By.cssSelector("div[fxlayoutalign='center center'][class='control-full']"), "Search"));
+ */

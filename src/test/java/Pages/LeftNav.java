@@ -10,14 +10,15 @@ public class LeftNav extends Parent {
         PageFactory.initElements(GWD.getDriver(), this);
     }
 
-    @FindBy(xpath = "//span [text()='Setup']")
+
+    @FindBy(xpath = "//span[text()='Setup']")
     private WebElement setup;
 
-    @FindBy(xpath = "//span[text()='School Setup']")
-    private WebElement schoolSetup;
+    @FindBy(xpath = "//span[text()='Parameters']")
+    private WebElement parameters;
 
-    @FindBy(xpath = "//span[text()='Departments']")
-    private WebElement departments;
+    @FindBy(xpath = "//span[text()='Bank Accounts']")
+    private WebElement bankAccounts;
 
     @FindBy(xpath = "//span[text()='Human Resources']")
     private WebElement humanResourcesLeftNav;
@@ -40,32 +41,19 @@ public class LeftNav extends Parent {
     @FindBy(xpath = "//span[text()='Nationalities']")
     private WebElement nationalities;
 
-
-
-
-
-
     public WebElement getWebElement(String strbutton) {
 
         switch (strbutton) {
-            case "setup":
-                return setup;
-            case "schoolSetup":
-                return schoolSetup;
-            case "departments":
-                return departments;
-            case "humanResourcesLeftNav":
-                return humanResourcesLeftNav;
-            case "SetupAtHumanResources":
-                return SetupAtHumanResources;
-            case "SetupAtAttestations":
-                return SetupAtAttestations;
-            case "positionCategoriesAtHR":return positionCategoriesAtHR;
-            case "nationalities": return nationalities;
+            case "setup":return setup;
+            case "parameters":return parameters;
+            case "bankAccounts":return bankAccounts;
             case "discounts":return discounts;
             case "gradeLevels" : return gradeLevels;
-
-
+            case "humanResourcesLeftNav":return humanResourcesLeftNav;
+            case "SetupAtHumanResources":return SetupAtHumanResources;
+            case "positionCategoriesAtHR":return positionCategoriesAtHR;
+            case "nationalities": return nationalities;
+            case "SetupAtAttestations": return SetupAtAttestations;
 
         }
         return null;

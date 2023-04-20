@@ -84,6 +84,7 @@ public class DialogContent extends Parent {
     @FindBy(xpath = "//ms-text-field[@id='ms-text-field-3']")
     private WebElement integrationCod;
 
+
     @FindBy(xpath = "//span[text()='Active']")
     private WebElement activeButton;
 
@@ -153,9 +154,12 @@ public class DialogContent extends Parent {
             case "deleteDialogBtn" : return deleteDialogBtn;
             case "codeInput" : return integCodeInput;
             case "editButtonAttestations" : return editButtonAttestations;
-            case "deleteImageBtnAttestations" : return deleteImageBtnAttestations;
-            case "alreadyExists":return alreadyExists;
+            case "deleteImageBtnAttestations" : return deleteImageBtnAttestations;  
             case "leftblank":return leftblank;
+            case "activeButton" : return activeButton;
+            case "alreadyExists" : return alreadyExists;
+            case "thereISNoDate": return thereISNoDate;
+
         }
         return null;
     }
