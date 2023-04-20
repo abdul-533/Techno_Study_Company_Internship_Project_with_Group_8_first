@@ -84,7 +84,6 @@ public class DialogContent extends Parent {
     @FindBy(xpath = "//ms-text-field[@id='ms-text-field-3']")
     private WebElement integrationCod;
 
-
     @FindBy(xpath = "//span[text()='Active']")
     private WebElement activeButton;
 
@@ -99,12 +98,16 @@ public class DialogContent extends Parent {
 
     @FindBy(xpath = "(//*[@data-icon='pen-to-square'])[1]")
     private WebElement editButtonAttestations;
+    @FindBy(xpath ="//mat-select[@formcontrolname='attachmentStages']")    //
+    private WebElement stage;
 
     @FindBy(xpath = "(//*[@data-icon='trash-can'])[1]")
     private WebElement deleteImageBtnAttestations;
 
     @FindBy(xpath = "//mat-error[contains(text(),'left blank!')]")
     private WebElement leftblank;
+    @FindBy(xpath = "//mat-form-field[@appearance='outline']//textarea")  //
+    private WebElement documentDescription;
 
 
     public void deleteItem(String searchText) {
@@ -154,12 +157,13 @@ public class DialogContent extends Parent {
             case "deleteDialogBtn" : return deleteDialogBtn;
             case "codeInput" : return integCodeInput;
             case "editButtonAttestations" : return editButtonAttestations;
-            case "deleteImageBtnAttestations" : return deleteImageBtnAttestations;  
+            case "deleteImageBtnAttestations" : return deleteImageBtnAttestations;
             case "leftblank":return leftblank;
             case "activeButton" : return activeButton;
             case "alreadyExists" : return alreadyExists;
             case "thereISNoDate": return thereISNoDate;
-
+            case "stage": return stage;
+            case "documentDescription": return documentDescription;
         }
         return null;
     }
