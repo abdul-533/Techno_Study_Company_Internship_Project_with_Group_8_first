@@ -9,20 +9,18 @@ public class LeftNav extends Parent {
     public LeftNav() {
         PageFactory.initElements(GWD.getDriver(), this);
     }
-
-
     @FindBy(xpath = "//span[text()='Setup']")
     private WebElement setup;
-
+    
     @FindBy(xpath = "//span[text()='Parameters']")
     private WebElement parameters;
-
+    
     @FindBy(xpath = "//span[text()='Bank Accounts']")
     private WebElement bankAccounts;
-
+    
     @FindBy(xpath = "//span[text()='Human Resources']")
     private WebElement humanResourcesLeftNav;
-
+    
     @FindBy(xpath = "(//span[text()='Setup'])[3]")
     private WebElement SetupAtHumanResources;
 
@@ -37,6 +35,10 @@ public class LeftNav extends Parent {
 
     @FindBy(xpath = "(//*[text()='Grade Levels'])[1]")
     private WebElement gradeLevels;
+
+    @FindBy(xpath = "//span[text()='Positions']")
+    private WebElement positions;
+
 
     @FindBy(xpath = "//span[text()='Nationalities']")
     private WebElement nationalities;
@@ -62,10 +64,10 @@ public class LeftNav extends Parent {
             case "SetupAtAttestations": return SetupAtAttestations;
             case "schoolSetup":return schoolSetup;
             case "departments":return departments;
+            case "positions":return positions;
 
         }
         return null;
     }
-
 
 }
