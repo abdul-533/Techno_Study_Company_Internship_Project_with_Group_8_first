@@ -1,4 +1,5 @@
 package StepDefinitions;
+
 import Pages.DialogContent;
 import Pages.LeftNav;
 import Utilities.GWD;
@@ -7,6 +8,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -16,8 +18,8 @@ import java.time.Duration;
 import java.util.List;
 
 public class _02_AddEditDeletePositionsDPSteps {
-    DialogContent dc=new DialogContent();
-    LeftNav  ln=new LeftNav();
+    DialogContent dc = new DialogContent();
+    LeftNav ln = new LeftNav();
 
 
     @Then("Click on the element in Dialog")
@@ -26,8 +28,16 @@ public class _02_AddEditDeletePositionsDPSteps {
 
         for (String strButton : strButtons) {
             WebElement element = dc.getWebElement(strButton); // webelemnti bul
+
+            WebDriverWait wait = new WebDriverWait(GWD.getDriver(), Duration.ofSeconds(30));
+            wait.until(ExpectedConditions.numberOfElementsToBe(By.cssSelector("fuse-progress-bar > *"), 0));
+
             dc.clickFunction(element);
+
+
         }
+
+
     }
 
 
@@ -53,30 +63,35 @@ public class _02_AddEditDeletePositionsDPSteps {
 
     @And("User should see succesfully information")
     public void userShouldSeeSuccesfullyInformation() {
-     dc.verifyContainsTextFunction(dc.getWebElement("successMsg"), "deleted");}
+        dc.verifyContainsTextFunction(dc.getWebElement("successMsg"), "deleted");
+    }
 
     @And("User should see succesfully created")
-    public void userShouldSeeSuccesfullyCreated() {dc.verifyContainsTextFunction(dc.getWebElement("successMsg"), "created"); }
-
+    public void userShouldSeeSuccesfullyCreated() {
+        dc.verifyContainsTextFunction(dc.getWebElement("successMsg"), "created");
+    }
 
 
     @And("User should see succesfully updated")
-    public void userShouldSeeSuccesfullyUpdated() {dc.verifyContainsTextFunction(dc.getWebElement("successMsg"), "updated");
+    public void userShouldSeeSuccesfullyUpdated() {
+        dc.verifyContainsTextFunction(dc.getWebElement("successMsg"), "updated");
 
     }
 
     @Then("User should see this field cannot left blank")
-    public void userShouldSeeThisFieldCannotLeftBlank() {dc.verifyContainsTextFunction(dc.getWebElement("leftblank"), "blank!");
+    public void userShouldSeeThisFieldCannotLeftBlank() {
+        dc.verifyContainsTextFunction(dc.getWebElement("leftblank"), "blank!");
     }
-
 
 
     @And("User should see error name msg")
-    public void userShouldSeeErrorNameMsg() {dc.verifyContainsTextFunction(dc.errorMessage,"already Department");
+    public void userShouldSeeErrorNameMsg() {
+        dc.verifyContainsTextFunction(dc.errorMessage, "already Department");
     }
 
     @And("User should see error code msg")
-    public void userShouldSeeErrorCodeMsg() {dc.verifyContainsTextFunction(dc.errorMessage,"already Department");
+    public void userShouldSeeErrorCodeMsg() {
+        dc.verifyContainsTextFunction(dc.errorMessage, "already Department");
     }
 }
 
