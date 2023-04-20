@@ -78,10 +78,10 @@ public class DialogContent extends Parent {
     @FindBy(xpath = "//div[@role='button']")
     private WebElement diyezClick;
 
-    @FindBy(xpath = "//ms-text-field[@formcontrolname='description']")
+    @FindBy(xpath = "//ms-text-field[@formcontrolname='description']//input")
     private WebElement description;
 
-    @FindBy(xpath = "//ms-text-field[@id='ms-text-field-3']")
+    @FindBy(xpath = "//ms-text-field[@id='ms-text-field-3']//input")
     private WebElement integrationCod;
 
     @FindBy(xpath = "//span[text()='Active']")
@@ -89,6 +89,16 @@ public class DialogContent extends Parent {
 
     @FindBy(xpath = "//div[contains(text(),'already exists.')]")
     private WebElement alreadyExists;
+
+    @FindBy(xpath = "//*[text()='Mentor']")
+    public WebElement mentor;
+    @FindBy(xpath = "//*[text()='The Position Category with Name \"Mentor\" already exists.']")
+    public WebElement alreadyExistsMsg;
+    @FindBy(xpath = "//ms-text-field[@id='ms-text-field-0']//input")
+    private WebElement descriptionSearch;
+
+    @FindBy(xpath = "//*[@data-icon='square-xmark']")
+    private WebElement closeMarkDiscounts;
 
     @FindBy(xpath = "//div[text()=' There is no data to display ']")
     private WebElement thereISNoDate;
@@ -155,6 +165,12 @@ public class DialogContent extends Parent {
             case "editButton" : return editButton;
             case "deleteImageBtn" : return deleteImageBtn;
             case "deleteDialogBtn" : return deleteDialogBtn;
+
+            case "activeButton" : return activeButton;
+            case "alreadyExists" : return alreadyExists;
+            case "descriptionSearch" : return descriptionSearch;
+            case "closeMarkDiscounts" : return closeMarkDiscounts;
+
             case "codeInput" : return integCodeInput;
             case "editButtonAttestations" : return editButtonAttestations;
             case "deleteImageBtnAttestations" : return deleteImageBtnAttestations;
@@ -164,9 +180,11 @@ public class DialogContent extends Parent {
             case "thereISNoDate": return thereISNoDate;
             case "stage": return stage;
             case "documentDescription": return documentDescription;
+
         }
         return null;
     }
+
 
 
 }
