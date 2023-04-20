@@ -4,31 +4,50 @@ Feature: Add Bank Account Functionality
     Given Navigate to Campus
     And Enter walid username as "turkeyts", password as "TechnoStudy123 " and click to login button
     Then User should login successfully
-
-  Scenario: Create Bank Accounts, edit and delete this accounts
     When User navigate to Bank Account
       | setup        |
       | parameters   |
       | bankAccounts |
+
+  Scenario: Create new Bank Accounts
+
     And Click on element add button
 
-    And Enter name,IBAM,currency and integration code
-      | nameInput      | Ali-533 |
-      | ibanInput      | 1234567 |
-      | integCodeInput | 533     |
+    And Enter required information
+      | nameInput      | Group_8             |
+      | ibanInput      | 8888 8888 8888 8888 |
+      | integCodeInput | 008                 |
     And Click to save button
-
     Then Success message should be displayed
 
-    And Click to edit button and change name
-      | nameInput | Ali-433 |
+  @Negative
+  Scenario:  User shouldn't  be able to add (create) new Bank Account with same data
+    And Click on element add button
 
+    And Enter required information
+      | nameInput      | Group_8             |
+      | ibanInput      | 8888 8888 8888 8888 |
+      | integCodeInput | 008                 |
+    And Click to save button
+    Then Unsuccessful message should be displayed
+
+  Scenario: User should be able to Edit Bank Account
+    And Click to edit button and change inputs
+      | nameInput      | Group_08            |
+      | ibanInput      | 9999 9999 9999 9999 |
+      | integCodeInput | 009                 |
+    And Click to save button
     Then Success message should be displayed
+
+  Scenario: User should be able to Delete Bank Account
 
     And  Click to delete button
-      | Ali-433 |
+      | Group_08 |
 
     Then Success message should be displayed
 
-
-
+  @Negative
+  Scenario: User shouldn't be able to access deleted Bank Account
+    And  Click to search button
+      | searchInput | Group_08 |
+    Then There is no date message should be displayed

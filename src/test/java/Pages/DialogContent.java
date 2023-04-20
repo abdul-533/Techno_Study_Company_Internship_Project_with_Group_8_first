@@ -26,7 +26,7 @@ public class DialogContent extends Parent {
 
     @FindBy(css = "span[class='mat-tooltip-trigger logo-text']")
     private WebElement txtTechnoStudy;
-    
+
     @FindBy(xpath = "//ms-add-button[contains(@tooltip,'ADD')]//button")
     private WebElement addButton;
 
@@ -52,9 +52,9 @@ public class DialogContent extends Parent {
     private WebElement searchInput;
 
     @FindBy(xpath = "//ms-edit-button[@class='ng-star-inserted']//button")
-    private WebElement editButton;
+    public WebElement editButton;
 
-    @FindBy(xpath = "//div[contains(text(),'successfully')]")
+    @FindBy(xpath = "//div[@class='hot-toast-bar-base']")
     private WebElement successMsg;
 
     @FindBy(xpath = "//ms-delete-button[@class='ng-star-inserted']//button")
@@ -62,7 +62,7 @@ public class DialogContent extends Parent {
 
     @FindBy(xpath = "//span[text()=' Delete ']")
     private WebElement deleteDialogBtn;
- 
+
     @FindBy(xpath = "//ms-integer-field[@formcontrolname='priority']/input")
     private WebElement priority;
 
@@ -89,6 +89,15 @@ public class DialogContent extends Parent {
 
     @FindBy(xpath = "//div[contains(text(),'already exists.')]")
     private WebElement alreadyExists;
+
+
+    @FindBy(xpath = "//div[text()=' There is no data to display ']")
+    private WebElement thereISNoDate;
+
+
+
+
+
 
     public void deleteItem(String searchText) {
         sendKeysFunction(searchInput, searchText);
@@ -123,7 +132,7 @@ public class DialogContent extends Parent {
             case "integCodeInput":return integCodeInput;
             case "successMsg":return successMsg;
             case "saveButton":return saveButton;
-            case "searchButton":return searchButton; 
+            case "searchButton":return searchButton;
             case "searchInput":return searchInput;
             case "description" : return description;
             case "integrationCod" : return integrationCod;
@@ -131,13 +140,13 @@ public class DialogContent extends Parent {
             case "shortName": return shortName;
             case "orderAdd" : return orderAdd;
             case "nextPage" : return nextPage;
-            case "diyezClick" : return diyezClick;   
-            case "editButton" : return editButton;  
+            case "diyezClick" : return diyezClick;
+            case "editButton" : return editButton;
             case "deleteImageBtn" : return deleteImageBtn;
             case "deleteDialogBtn" : return deleteDialogBtn;
             case "activeButton" : return activeButton;
             case "alreadyExists" : return alreadyExists;
-    
+            case "thereISNoDate": return thereISNoDate;
         }
         return null;
     }
