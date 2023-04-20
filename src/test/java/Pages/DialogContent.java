@@ -87,17 +87,21 @@ public class DialogContent extends Parent {
     @FindBy(xpath = "//ms-text-field[@formcontrolname='code']/input")
     private WebElement codeInput;
 
-    @FindBy(xpath = "//div[@class='hot-toast-bar-base']")
-    public WebElement createdMassageDP;
+    @FindBy(xpath = "//div[contains(text(),'already Department')]")
+    public WebElement errorMessage;
 
-    @FindBy(xpath = "//div[text()='There is already Department with \"tyy\" name!']")
-    public WebElement errorMassageDP;
+    @FindBy(xpath = "//div[contains(text(),'already exists.')]")
+    private WebElement alreadyExists;
 
-    @FindBy(xpath ="//div[text()='School Department successfully updated']")
-    public WebElement updatedMassageDP;
+    @FindBy(xpath = "(//*[@data-icon='pen-to-square'])[1]")
+    private WebElement editButtonAttestations;
 
-    @FindBy(xpath = "//div[text()='School Department successfully deleted']")
-    public WebElement deleteMassageDP;
+    @FindBy(xpath = "(//*[@data-icon='trash-can'])[1]")
+    private WebElement deleteImageBtnAttestations;
+
+    @FindBy(xpath = "//mat-error[contains(text(),'left blank!')]")
+    private WebElement leftblank;
+
 
     public void deleteItem(String searchText) {
         sendKeysFunction(searchInput, searchText);
@@ -145,7 +149,10 @@ public class DialogContent extends Parent {
             case "deleteImageBtn" : return deleteImageBtn;
             case "deleteDialogBtn" : return deleteDialogBtn;
             case "codeInput" : return codeInput;
-
+            case "editButtonAttestations" : return editButtonAttestations;
+            case "deleteImageBtnAttestations" : return deleteImageBtnAttestations;
+            case "alreadyExists":return alreadyExists;
+            case "leftblank":return leftblank;
         }
         return null;
     }

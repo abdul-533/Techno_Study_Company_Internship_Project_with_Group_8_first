@@ -64,7 +64,7 @@ Feature: Add Edit Delete Positions from DP
       | codeInput | 6789 |
     And  Click on the element in Dialog
       | saveButton |
-    And User should see succesfully error
+    And User should see error name msg
 
   Scenario: Positive Test Case see to updated massage
 
@@ -90,3 +90,35 @@ Feature: Add Edit Delete Positions from DP
       | saveButton |
     And User should see succesfully updated
 
+  Scenario: Negative Test Case see to can't left blank!
+
+    And Click on the element LeftNav
+      | setup       |
+      | schoolSetup |
+      | departments |
+    Then Click on the element in Dialog
+      | addButton |
+      | nameInput |
+      | codeInput |
+    Then User should see this field cannot left blank
+
+  Scenario: Negative Test Case see to same code
+    And Click on the element LeftNav
+      | setup       |
+      | schoolSetup |
+      | departments |
+    Then Click on the element in Dialog
+      | addButton |
+    And  Enter a new name and code name in Dialog Content
+      | nameInput | tyy  |
+      | codeInput | 6789 |
+    Then Click on the element in Dialog
+      | saveButton |
+    Then Click on the element in Dialog
+      | addButton |
+    And  Enter a new name and code name in Dialog Content
+      | nameInput | tc  |
+      | codeInput | 6789 |
+    And  Click on the element in Dialog
+      | saveButton |
+    And User should see error code msg

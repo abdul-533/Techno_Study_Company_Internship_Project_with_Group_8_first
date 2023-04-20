@@ -53,22 +53,30 @@ public class _02_AddEditDeletePositionsDPSteps {
 
     @And("User should see succesfully information")
     public void userShouldSeeSuccesfullyInformation() {
-        dc.verifyContainsTextFunction(dc.deleteMassageDP,"deleted");
-    }
+     dc.verifyContainsTextFunction(dc.getWebElement("successMsg"), "deleted");}
 
     @And("User should see succesfully created")
-    public void userShouldSeeSuccesfullyCreated() {dc.verifyContainsTextFunction(dc.createdMassageDP,"created");
+    public void userShouldSeeSuccesfullyCreated() {dc.verifyContainsTextFunction(dc.getWebElement("successMsg"), "created"); }
 
-    }
 
-    @And("User should see succesfully error")
-    public void userShouldSeeSuccesfullyError() {dc.verifyContainsTextFunction(dc.errorMassageDP,"name!");
-
-    }
 
     @And("User should see succesfully updated")
-    public void userShouldSeeSuccesfullyUpdated() {
-        dc.verifyContainsTextFunction(dc.updatedMassageDP,"successfully updated");
+    public void userShouldSeeSuccesfullyUpdated() {dc.verifyContainsTextFunction(dc.getWebElement("successMsg"), "updated");
+
+    }
+
+    @Then("User should see this field cannot left blank")
+    public void userShouldSeeThisFieldCannotLeftBlank() {dc.verifyContainsTextFunction(dc.getWebElement("leftblank"), "blank!");
+    }
+
+
+
+    @And("User should see error name msg")
+    public void userShouldSeeErrorNameMsg() {dc.verifyContainsTextFunction(dc.errorMessage,"already Department");
+    }
+
+    @And("User should see error code msg")
+    public void userShouldSeeErrorCodeMsg() {dc.verifyContainsTextFunction(dc.errorMessage,"already Department");
     }
 }
 
