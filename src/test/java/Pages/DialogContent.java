@@ -52,9 +52,9 @@ public class DialogContent extends Parent {
     private WebElement searchInput;
 
     @FindBy(xpath = "//ms-edit-button[@class='ng-star-inserted']//button")
-    private WebElement editButton;
+    public WebElement editButton;
 
-    @FindBy(xpath = "//div[contains(text(),'successfully')]")
+    @FindBy(xpath = "//div[@class='hot-toast-bar-base']")
     private WebElement successMsg;
 
     @FindBy(xpath = "//ms-delete-button[@class='ng-star-inserted']//button")
@@ -84,14 +84,17 @@ public class DialogContent extends Parent {
     @FindBy(xpath = "//ms-text-field[@id='ms-text-field-3']")
     private WebElement integrationCod;
 
-    @FindBy(xpath = "//ms-text-field[@formcontrolname='code']/input")
-    private WebElement codeInput;
-
-    @FindBy(xpath = "//div[contains(text(),'already Department')]")
-    public WebElement errorMessage;
+    @FindBy(xpath = "//span[text()='Active']")
+    private WebElement activeButton;
 
     @FindBy(xpath = "//div[contains(text(),'already exists.')]")
     private WebElement alreadyExists;
+
+    @FindBy(xpath = "//div[text()=' There is no data to display ']")
+    private WebElement thereISNoDate;
+
+    @FindBy(xpath = "//div[contains(text(),'already Department')]")
+    public WebElement errorMessage;
 
     @FindBy(xpath = "(//*[@data-icon='pen-to-square'])[1]")
     private WebElement editButtonAttestations;
@@ -148,7 +151,7 @@ public class DialogContent extends Parent {
             case "editButton" : return editButton;
             case "deleteImageBtn" : return deleteImageBtn;
             case "deleteDialogBtn" : return deleteDialogBtn;
-            case "codeInput" : return codeInput;
+            case "codeInput" : return integCodeInput;
             case "editButtonAttestations" : return editButtonAttestations;
             case "deleteImageBtnAttestations" : return deleteImageBtnAttestations;
             case "alreadyExists":return alreadyExists;
