@@ -165,9 +165,6 @@ public class DialogContent extends Parent {
             case "editButton" : return editButton;
             case "deleteImageBtn" : return deleteImageBtn;
             case "deleteDialogBtn" : return deleteDialogBtn;
-
-            case "activeButton" : return activeButton;
-            case "alreadyExists" : return alreadyExists;
             case "descriptionSearch" : return descriptionSearch;
             case "closeMarkDiscounts" : return closeMarkDiscounts;
 
