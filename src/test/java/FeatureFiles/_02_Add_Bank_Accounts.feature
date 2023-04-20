@@ -13,7 +13,7 @@ Feature: Add Bank Account Functionality
 
     And Click on element add button
 
-    And Enter name,IBAM,currency and integration code
+    And Enter required information
       | nameInput      | Group_8             |
       | ibanInput      | 8888 8888 8888 8888 |
       | integCodeInput | 008                 |
@@ -24,7 +24,7 @@ Feature: Add Bank Account Functionality
   Scenario:  User shouldn't  be able to add (create) new Bank Account with same data
     And Click on element add button
 
-    And Enter name,IBAM,currency and integration code
+    And Enter required information
       | nameInput      | Group_8             |
       | ibanInput      | 8888 8888 8888 8888 |
       | integCodeInput | 008                 |
@@ -36,7 +36,7 @@ Feature: Add Bank Account Functionality
       | nameInput      | Group_08            |
       | ibanInput      | 9999 9999 9999 9999 |
       | integCodeInput | 009                 |
-
+    And Click to save button
     Then Success message should be displayed
 
   Scenario: User should be able to Delete Bank Account
@@ -50,5 +50,4 @@ Feature: Add Bank Account Functionality
   Scenario: User shouldn't be able to access deleted Bank Account
     And  Click to search button
       | searchInput | Group_08 |
-
     Then There is no date message should be displayed

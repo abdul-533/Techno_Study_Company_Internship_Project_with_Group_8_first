@@ -65,6 +65,10 @@ public class DialogContent extends Parent {
     private WebElement thereISNoDate;
 
 
+
+
+
+
     public void deleteItem(String searchText) {
         sendKeysFunction(searchInput, searchText);
         clickFunction(searchButton);
@@ -117,8 +121,4 @@ public class DialogContent extends Parent {
         return null;
     }
 
-/*
-     WebDriverWait wait = new WebDriverWait(BaseDriver.getDriver(), Duration.ofSeconds(30));
-        wait.until(ExpectedConditions.textToBe(By.cssSelector("div[fxlayoutalign='center center'][class='control-full']"), "Search"));
- */
 }

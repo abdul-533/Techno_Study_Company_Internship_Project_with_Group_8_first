@@ -11,9 +11,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.security.Key;
+import java.time.Duration;
 import java.util.List;
 
 public class _02_Bank_Account_Abdul {
@@ -35,7 +38,7 @@ public class _02_Bank_Account_Abdul {
 
     }
 
-    @And("Enter name,IBAM,currency and integration code")
+    @And("Enter required information")
     public void enterNameIBAMCurrencyAndIntegrationCode(DataTable dt) {
         List<List<String>> items = dt.asLists(String.class);
 
@@ -77,7 +80,7 @@ public class _02_Bank_Account_Abdul {
         }
         ac.sendKeys(Keys.ENTER).build().perform();
 
-        dc.clickFunction(dc.getWebElement("saveButton"));
+        //dc.clickFunction(dc.getWebElement("saveButton"));
     }
 
     @And("Click to delete button")
@@ -102,8 +105,10 @@ public class _02_Bank_Account_Abdul {
         for (int i = 0; i < items.size(); i++) {
             dc.sendKeysFunction(dc.getWebElement(items.get(i).get(0)), items.get(i).get(1));
         }
-        dc.clickFunction(dc.getWebElement("searchButton"));
 
+        Actions ac1 = new Actions(GWD.getDriver());
+        ac1.sendKeys(Keys.ENTER).build().perform();
+    //    dc.clickFunction(dc.getWebElement("searchButton"));
     }
 
     @Then("There is no date message should be displayed")
@@ -113,3 +118,7 @@ public class _02_Bank_Account_Abdul {
     }
 }
 
+/*
+     WebDriverWait wait = new WebDriverWait(BaseDriver.getDriver(), Duration.ofSeconds(30));
+        wait.until(ExpectedConditions.textToBe(By.cssSelector("div[fxlayoutalign='center center'][class='control-full']"), "Search"));
+ */
