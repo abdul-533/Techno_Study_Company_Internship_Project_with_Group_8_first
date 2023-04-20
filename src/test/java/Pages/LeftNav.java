@@ -33,6 +33,10 @@ public class LeftNav extends Parent {
     @FindBy(xpath = "(//*[text()='Grade Levels'])[1]")
     private WebElement gradeLevels;
 
+    @FindBy(xpath = "//span[text()='Positions']")
+    private WebElement positions;
+
+
     public WebElement getWebElement(String strbutton) {
 
         switch (strbutton) {
@@ -44,6 +48,7 @@ public class LeftNav extends Parent {
             case "humanResourcesLeftNav":return humanResourcesLeftNav;
             case "SetupAtHumanResources":return SetupAtHumanResources;
             case "positionCategoriesAtHR":return positionCategoriesAtHR;
+            case "positions":return positions;
 
         }
         return null;
