@@ -25,10 +25,10 @@ public class _02_TugbaSteps {
         }
     }
 
-    @And("Click add button")
-    public void clickAddButton() {
-        dc.clickFunction(dc.getWebElement("addButton"));
-    }
+//    @And("Click add button")
+//    public void clickAddButton() {
+//        dc.clickFunction(dc.getWebElement("addButton"));
+//    }
 
     @And("Enter name, short name, location type and capacity")
     public void enterNameShortNameLocationTypeAndCapacity(DataTable dt) {
@@ -41,20 +41,20 @@ public class _02_TugbaSteps {
         actions.sendKeys(Keys.DOWN).sendKeys(Keys.ENTER).build().perform();
     }
 
-    @And("Click save button")
-    public void clickSaveButton() {
-        dc.clickFunction(dc.getWebElement("saveButton"));
-    }
+//    @And("Click save button")
+//    public void clickSaveButton() {
+//        dc.clickFunction(dc.getWebElement("saveButton"));
+//    }
 
-    @Then("Success message should be displayed")
-    public void successMessageShouldBeDisplayed() {
-        dc.verifyContainsTextFunction(dc.getWebElement("successMsg"), "successfully");
-    }
+//    @Then("Success message should be displayed")
+//    public void successMessageShouldBeDisplayed() {
+//        dc.verifyContainsTextFunction(dc.getWebElement("successMsg"), "successfully");
+//    }
 
-    @Then("Then Already exist should be displayed")
-    public void thenAlreadyExistShouldBeDisplayed() {
-        dc.verifyContainsTextFunction(dc.getWebElement("alreadyExist"),"already exists");
-    }
+//    @Then("Then Already exist should be displayed")
+//    public void thenAlreadyExistShouldBeDisplayed() {
+//        dc.verifyContainsTextFunction(dc.getWebElement("alreadyExist"),"already exists");
+//    }
 
     @And("Click edit button and change name")
     public void clickEditButtonAndChangeName() {
@@ -69,8 +69,8 @@ public class _02_TugbaSteps {
         dc.clickFunction(dc.getWebElement("deleteDialogBtn"));
     }
 
-    @Then("No data should be displayed")
-    public void noDataShouldBeDisplayed() {
-        dc.verifyContainsTextFunction(dc.getWebElement("noData"), "no data");
-    }
+//    @Then("No data should be displayed")
+//    public void noDataShouldBeDisplayed() {
+//        dc.verifyContainsTextFunction(dc.getWebElement("noData"), "no data");
+//    }
 }
