@@ -49,9 +49,9 @@ public class DialogContent extends Parent {
     private WebElement searchInput;
 
     @FindBy(xpath = "//ms-edit-button[@class='ng-star-inserted']//button")
-    private WebElement editButton;
+    public WebElement editButton;
 
-    @FindBy(xpath = "//div[contains(text(),'successfully')]")
+    @FindBy(xpath = "//div[@class='hot-toast-bar-base']")
     private WebElement successMsg;
 
     @FindBy(xpath = "//ms-delete-button[@class='ng-star-inserted']//button")
@@ -59,6 +59,11 @@ public class DialogContent extends Parent {
 
     @FindBy(xpath = "//span[text()=' Delete ']")
     private WebElement deleteDialogBtn;
+
+
+    @FindBy(xpath = "//div[text()=' There is no data to display ']")
+    private WebElement thereISNoDate;
+
 
     public void deleteItem(String searchText) {
         sendKeysFunction(searchInput, searchText);
@@ -103,11 +108,17 @@ public class DialogContent extends Parent {
                 return successMsg;
             case "saveButton":
                 return saveButton;
-            case "searchInput":return searchInput;
+            case "searchInput":
+                return searchInput;
+            case "thereISNoDate":
+                return thereISNoDate;
 
         }
         return null;
     }
 
-
+/*
+     WebDriverWait wait = new WebDriverWait(BaseDriver.getDriver(), Duration.ofSeconds(30));
+        wait.until(ExpectedConditions.textToBe(By.cssSelector("div[fxlayoutalign='center center'][class='control-full']"), "Search"));
+ */
 }

@@ -57,15 +57,27 @@ public class _02_Bank_Account_Abdul {
         dc.verifyContainsTextFunction(dc.getWebElement("successMsg"), "success");
     }
 
-    @And("Click to edit button and change name")
-    public void clickToEditButtonAndChangeName(DataTable dt) {
+    @And("Click to edit button and change inputs")
+    public void clickToEditButtonAndChangeInputs(DataTable dt) {
+        dc.sendKeysFunction(dc.getWebElement("searchInput"), "Group_8");
+        Actions ac1 = new Actions(GWD.getDriver());
+        ac1.sendKeys(Keys.ENTER).build().perform();
+
+        dc.editButton.click();
 
         List<List<String>> items = dt.asLists(String.class);
 
         for (int i = 0; i < items.size(); i++) {
-            dc.editItem("Ali-533", items.get(i).get(1));
+            dc.sendKeysFunction(dc.getWebElement(items.get(i).get(0)), items.get(i).get(1));
         }
+        dc.clickFunction(dc.getWebElement("currencyInput"));
+        Actions ac = new Actions(GWD.getDriver());
+        for (int i = 0; i < 3; i++) {
+            ac.sendKeys(Keys.DOWN).build().perform();
+        }
+        ac.sendKeys(Keys.ENTER).build().perform();
 
+        dc.clickFunction(dc.getWebElement("saveButton"));
     }
 
     @And("Click to delete button")
@@ -75,6 +87,29 @@ public class _02_Bank_Account_Abdul {
 
             dc.deleteItem(strDeleteText);
         }
+    }
+
+    @Then("Unsuccessful message should be displayed")
+    public void unsuccessfulMessageShouldBeDisplayed() {
+        dc.verifyContainsTextFunction(dc.getWebElement("successMsg"), "already exists");
+    }
+
+    @And("Click to search button")
+    public void clickToSearchButton(DataTable dt) {
+
+        List<List<String>> items = dt.asLists(String.class);
+
+        for (int i = 0; i < items.size(); i++) {
+            dc.sendKeysFunction(dc.getWebElement(items.get(i).get(0)), items.get(i).get(1));
+        }
+        dc.clickFunction(dc.getWebElement("searchButton"));
+
+    }
+
+    @Then("There is no date message should be displayed")
+    public void thereIsNoDateMessageShouldBeDisplayed() {
+        dc.verifyContainsTextFunction(dc.getWebElement("thereISNoDate"), "There is no data to display");
+
     }
 }
 
