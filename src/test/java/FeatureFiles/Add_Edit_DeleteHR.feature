@@ -23,7 +23,6 @@ Feature: Add Edit Delete Positions from HR
     | positionCategoriesAtHR |
       Then Click to edit button and change name HR
       |nameInput| TechnoStudyGR88 |
-      And Click to save button
       Then Success message should be displayed
 
       Scenario: Delete Function from HR
