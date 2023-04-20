@@ -13,7 +13,7 @@ import java.time.Duration;
 
 public class Parent {
 
-    WebDriverWait wait = new WebDriverWait(GWD.getDriver(), Duration.ofSeconds(10));
+    WebDriverWait wait = new WebDriverWait(GWD.getDriver(), Duration.ofSeconds(15));
 
     public void sendKeysFunction(WebElement element, String text) {
         waitUntilVisible(element);

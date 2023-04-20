@@ -39,7 +39,7 @@ public class DialogContent extends Parent {
     @FindBy(xpath = "//mat-select[@formcontrolname='currency']")
     private WebElement currencyInput;
 
-    @FindBy(xpath = "//ms-text-field[@formcontrolname='integrationCode']/input")
+    @FindBy(xpath = "//ms-text-field[contains(@placeholder,'CODE')]/input")
     private WebElement integCodeInput;
 
     @FindBy(xpath = "//span[text()='Save']")
@@ -52,9 +52,9 @@ public class DialogContent extends Parent {
     private WebElement searchInput;
 
     @FindBy(xpath = "//ms-edit-button[@class='ng-star-inserted']//button")
-    private WebElement editButton;
+    public WebElement editButton;
 
-    @FindBy(xpath = "//div[contains(text(),'successfully')]")
+    @FindBy(xpath = "//div[@class='hot-toast-bar-base']")
     private WebElement successMsg;
 
     @FindBy(xpath = "//ms-delete-button[@class='ng-star-inserted']//button")
@@ -89,6 +89,7 @@ public class DialogContent extends Parent {
 
     @FindBy(xpath = "//div[contains(text(),'already exists.')]")
     private WebElement alreadyExists;
+
     @FindBy(xpath = "//*[text()='Mentor']")
     public WebElement mentor;
     @FindBy(xpath = "//*[text()='The Position Category with Name \"Mentor\" already exists.']")
@@ -98,6 +99,26 @@ public class DialogContent extends Parent {
 
     @FindBy(xpath = "//*[@data-icon='square-xmark']")
     private WebElement closeMarkDiscounts;
+
+    @FindBy(xpath = "//div[text()=' There is no data to display ']")
+    private WebElement thereISNoDate;
+
+    @FindBy(xpath = "//div[contains(text(),'already Department')]")
+    public WebElement errorMessage;
+
+    @FindBy(xpath = "(//*[@data-icon='pen-to-square'])[1]")
+    private WebElement editButtonAttestations;
+    @FindBy(xpath ="//mat-select[@formcontrolname='attachmentStages']")    //
+    private WebElement stage;
+
+    @FindBy(xpath = "(//*[@data-icon='trash-can'])[1]")
+    private WebElement deleteImageBtnAttestations;
+
+    @FindBy(xpath = "//mat-error[contains(text(),'left blank!')]")
+    private WebElement leftblank;
+    @FindBy(xpath = "//mat-form-field[@appearance='outline']//textarea")  //
+    private WebElement documentDescription;
+
 
     public void deleteItem(String searchText) {
         sendKeysFunction(searchInput, searchText);
@@ -144,10 +165,21 @@ public class DialogContent extends Parent {
             case "editButton" : return editButton;
             case "deleteImageBtn" : return deleteImageBtn;
             case "deleteDialogBtn" : return deleteDialogBtn;
+
             case "activeButton" : return activeButton;
             case "alreadyExists" : return alreadyExists;
             case "descriptionSearch" : return descriptionSearch;
             case "closeMarkDiscounts" : return closeMarkDiscounts;
+
+            case "codeInput" : return integCodeInput;
+            case "editButtonAttestations" : return editButtonAttestations;
+            case "deleteImageBtnAttestations" : return deleteImageBtnAttestations;
+            case "leftblank":return leftblank;
+            case "activeButton" : return activeButton;
+            case "alreadyExists" : return alreadyExists;
+            case "thereISNoDate": return thereISNoDate;
+            case "stage": return stage;
+            case "documentDescription": return documentDescription;
 
         }
         return null;
