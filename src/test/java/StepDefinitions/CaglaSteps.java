@@ -24,10 +24,10 @@ public class CaglaSteps {
         ln.clickFunction(ln.getWebElement("documentTypes"));
     }
 
-    @And("Click add button")
-    public void clickAddButton() {
-        dc.clickFunction(dc.getWebElement("addButton"));
-    }
+//    @And("Click add button")
+//    public void clickAddButton() {
+//        dc.clickFunction(dc.getWebElement("addButton"));
+//    }
 
     @And("Enter name, stage and description")
     public void enterNameStageAndDescription(DataTable dt) {
@@ -44,22 +44,22 @@ public class CaglaSteps {
 
     }
 
-    @And("Click save button")
-    public void clickSaveButton() {
-        dc.clickFunction(dc.getWebElement("saveButton"));
-    }
+//    @And("Click save button")
+//    public void clickSaveButton() {
+//        dc.clickFunction(dc.getWebElement("saveButton"));
+//    }
 
-    @Then("Success message should be displayed")
-    public void successMessageShouldBeDisplayed() {
-        dc.verifyContainsTextFunction(dc.getWebElement("successMsg"), "successfully");
-    }
+//    @Then("Success message should be displayed")
+//    public void successMessageShouldBeDisplayed() {
+//        dc.verifyContainsTextFunction(dc.getWebElement("successMsg"), "successfully");
+//    }
 
-    @Then("Already exist should be displayed")
-    public void alreadyExistShouldBeDisplayed() {
-        dc.verifyContainsTextFunction(dc.getWebElement("successMsg"),"successfully");
-    }
+//    @Then("Already exist should be displayed")
+//    public void alreadyExistShouldBeDisplayed() {
+//        dc.verifyContainsTextFunction(dc.getWebElement("successMsg"),"successfully");
+//    }
 
-    @And("Search name and click edit button and change name")
+    @And("Search name and click edit button and change Name")
     public void searchNameAndClickEditButtonAndChangeName(DataTable dt) {
         List<List<String>> items = dt.asLists(String.class);
 
@@ -68,7 +68,7 @@ public class CaglaSteps {
         }
     }
 
-    @And("Search name and click delete button")
+    @And("Search name and click delete buttons")
     public void searchNameAndClickDeleteButton(DataTable dt) {
         List<String> strButtons = dt.asList(String.class);
         for (String strDeleteText : strButtons) {
@@ -77,21 +77,21 @@ public class CaglaSteps {
         }
     }
 
-    @And("Search for the deleted name")
-    public void searchForTheDeletedName(DataTable dt) {
-        List<String> strButtons = dt.asList(String.class);
+//    @And("Search for the deleted name")
+//    public void searchForTheDeletedName(DataTable dt) {
+//        List<String> strButtons = dt.asList(String.class);
+//
+//        for (String strButton: strButtons){
+//            dc.sendKeysFunction(dc.getWebElement("searchInput"), strButton);
+//            dc.clickFunction(dc.getWebElement("searchButton"));
+//        }
+//    }
 
-        for (String strButton: strButtons){
-            dc.sendKeysFunction(dc.getWebElement("searchInput"), strButton);
-            dc.clickFunction(dc.getWebElement("searchButton"));
-        }
-    }
-
-    @Then("No data should be displayed")
-    public void noDataShouldBeDisplayed() {
-        dc.verifyContainsTextFunction(dc.getWebElement("thereISNoDate"), "no data");
-
-    }
+//    @Then("No data should be displayed")
+//    public void noDataShouldBeDisplayed() {
+//        dc.verifyContainsTextFunction(dc.getWebElement("thereISNoDate"), "no data");
+//
+//    }
 
 
 }
