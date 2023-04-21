@@ -16,7 +16,7 @@ public class GSP_10_A_A_BankAccountsSteps {
     DialogContent dc = new DialogContent();
     LeftNav ln = new LeftNav();
 
-    @When("User navigate to Bank Account")
+    @When("User navigate to LeftNav")
     public void userNavigateToBankAccount(DataTable items) {
         List<String> strButtons = items.asList(String.class);
         for (String strButton : strButtons) {

@@ -4,7 +4,7 @@ Feature: Add Bank Account Functionality
     Given Navigate to Campus
     And Enter walid username as "turkeyts", password as "TechnoStudy123 " and click to login button
     Then User should login successfully
-    When User navigate to Bank Account
+    When User navigate to LeftNav
       | setup        |
       | parameters   |
       | bankAccounts |

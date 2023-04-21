@@ -125,6 +125,13 @@ public class DialogContent extends Parent {
     @FindBy(xpath = "//ms-integer-field[@formcontrolname='capacity']//input")
     private WebElement capacity;
 
+    @FindBy(xpath = " (//mat-select[@role='combobox'])[2]")
+    private WebElement fieldType;
+
+    @FindBy(xpath = "(//ms-text-field[contains(@placeholder,'CODE')]/input)[2]")
+    private WebElement code;
+
+
 
     public void deleteItem(String searchText) {
         sendKeysFunction(searchInput, searchText);
@@ -173,7 +180,6 @@ public class DialogContent extends Parent {
             case "deleteDialogBtn" : return deleteDialogBtn;
             case "descriptionSearch" : return descriptionSearch;
             case "closeMarkDiscounts" : return closeMarkDiscounts;
-
             case "codeInput" : return integCodeInput;
             case "editButtonAttestations" : return editButtonAttestations;
             case "deleteImageBtnAttestations" : return deleteImageBtnAttestations;
@@ -185,6 +191,8 @@ public class DialogContent extends Parent {
             case "documentDescription": return documentDescription;
             case "locationType":return locationType;
             case "capacity":return capacity;
+            case "fieldType":return fieldType;
+            case "code":return code;
 
         }
         return null;

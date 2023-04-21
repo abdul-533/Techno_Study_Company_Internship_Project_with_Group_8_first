@@ -54,6 +54,8 @@ public class LeftNav extends Parent {
 
     @FindBy(xpath = "(//span[text()='Locations'])[1]")
     private WebElement locations;
+    @FindBy(xpath = "//a[@href='/entity-fields/list']")
+    private WebElement fields;
 
 
     public WebElement getWebElement(String strbutton) {
@@ -72,9 +74,9 @@ public class LeftNav extends Parent {
             case "schoolSetup":return schoolSetup;
             case "departments":return departments;
             case "positions":return positions;
-
             case "documentTypes": return documentTypes;
             case "locations":return locations;
+            case "fields":return fields;
         }
         return null;
     }
