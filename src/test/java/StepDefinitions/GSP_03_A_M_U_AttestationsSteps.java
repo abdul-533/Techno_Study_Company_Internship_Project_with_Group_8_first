@@ -56,7 +56,7 @@ public class GSP_03_A_M_U_AttestationsSteps {
 
     @Then("User should see succesfully error message")
     public void userShouldSeeSuccesfullyErrorMessage() {
-        dc.verifyContainsTextFunction(dc.getWebElement("alreadyExists"), "already exists.");
+        dc.verifyContainsTextFunction(dc.getWebElement("successMsg"), "already exists.");
     }
 
     @Then("User should see succesfully create message")
