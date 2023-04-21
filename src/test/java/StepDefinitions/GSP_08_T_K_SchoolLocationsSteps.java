@@ -40,6 +40,8 @@ public class GSP_08_T_K_SchoolLocationsSteps {
         actions.sendKeys(Keys.DOWN).sendKeys(Keys.ENTER).build().perform();
     }
 
+    //tr[contains(@class,'remove-background')]//td[2]
+
 //    @And("Click save button")
 //    public void clickSaveButton() {
 //        dc.clickFunction(dc.getWebElement("saveButton"));

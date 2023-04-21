@@ -18,6 +18,7 @@ Feature: Add Locations Functionality
     And Click save button
     Then Success message should be displayed
 
+  @Negative
   Scenario: Negative Create
     When Navigate to Locations
       | setup       |
@@ -47,10 +48,11 @@ Feature: Add Locations Functionality
     And Click delete button
     Then Success message should be displayed
 
-   Scenario: Negative Delete
-     When Navigate to Locations
-       | setup       |
-       | schoolSetup |
-       | locations   |
-     And Click delete button
-     Then No data should be displayed
+  @Negative
+  Scenario: Negative Delete
+    When Navigate to Locations
+      | setup       |
+      | schoolSetup |
+      | locations   |
+    And Click delete button
+    Then No data should be displayed
