@@ -14,7 +14,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.List;
 
-public class GSP_08_T_Y_DepartmentsSteps {
+public class GSP_09_T_Y_DepartmentsSteps {
     DialogContent dc = new DialogContent();
     LeftNav ln = new LeftNav();
 

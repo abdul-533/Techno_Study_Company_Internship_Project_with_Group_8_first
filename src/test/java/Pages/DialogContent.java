@@ -131,7 +131,14 @@ public class DialogContent extends Parent {
     @FindBy(xpath = "(//ms-text-field[contains(@placeholder,'CODE')]/input)[2]")
     private WebElement code;
 
+    @FindBy(xpath = "//tr[contains(@class,'remove-background')]//td[2]")
+    public List<WebElement> noSearchButtonForName;
 
+    @FindBy(xpath = "//ms-dialog-content[@formgroup='[object Object]']")
+    private WebElement emptyClick;
+
+    @FindBy(xpath = "//ms-delete-button[@class='ng-star-inserted']//button")
+    public List<WebElement> NoDeleteButtonsForName;
 
     public void deleteItem(String searchText) {
         sendKeysFunction(searchInput, searchText);
@@ -193,6 +200,7 @@ public class DialogContent extends Parent {
             case "capacity":return capacity;
             case "fieldType":return fieldType;
             case "code":return code;
+            case "emptyClick":return emptyClick;
 
         }
         return null;

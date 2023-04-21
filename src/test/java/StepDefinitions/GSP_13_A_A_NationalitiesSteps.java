@@ -15,6 +15,7 @@ public class GSP_13_A_A_NationalitiesSteps {
         for (int i = 0; i < items.size(); i++) {
             dc.sendKeysFunction(dc.getWebElement(items.get(i).get(0)), items.get(i).get(1));
         }
+        dc.clickFunction(dc.getWebElement("emptyClick"));
     }
 
     @And("Click to edit button and change name")

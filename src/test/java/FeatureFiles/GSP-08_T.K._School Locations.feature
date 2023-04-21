@@ -4,55 +4,42 @@ Feature: Add Locations Functionality
     Given Navigate to Campus
     And Enter walid username as "turkeyts", password as "TechnoStudy123 " and click to login button
     Then User should login successfully
-
-  Scenario: Positive Create
-    When Navigate to Locations
+    When User navigate to LeftNav
       | setup       |
       | schoolSetup |
       | locations   |
+
+  Scenario: Positive Create
     And Click add button
-    And Enter name, short name, location type and capacity
+    And Enter required informations
       | nameInput | TechnoStudy |
       | shortName | Techno      |
       | capacity  | 150         |
-    And Click save button
+    And Click to save button
     Then Success message should be displayed
 
   @Negative
   Scenario: Negative Create
-    When Navigate to Locations
-      | setup       |
-      | schoolSetup |
-      | locations   |
     And Click add button
-    And Enter name, short name, location type and capacity
+    And Enter required informations
       | nameInput | TechnoStudy |
       | shortName | Techno      |
       | capacity  | 150         |
-    And Click save button
-    Then Already exist should be displayed
+    And Click to save button
+    Then Unsuccessful message should be displayed
 
   Scenario: Positive Edit
-    When Navigate to Locations
-      | setup       |
-      | schoolSetup |
-      | locations   |
     And Click edit button and change name
+      | TechnoStudy | NewTechnoStudy |
+    And Click to save button
     Then Success message should be displayed
 
   Scenario: Positive Delete
-    When Navigate to Locations
-      | setup       |
-      | schoolSetup |
-      | locations   |
     And Click delete button
+      | NewTechnoStudy |
     Then Success message should be displayed
 
   @Negative
   Scenario: Negative Delete
-    When Navigate to Locations
-      | setup       |
-      | schoolSetup |
-      | locations   |
-    And Click delete button
-    Then No data should be displayed
+    Then There is no date with this name
+      | NewTechnoStudy |
