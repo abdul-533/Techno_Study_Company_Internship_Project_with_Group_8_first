@@ -7,8 +7,6 @@ import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -16,7 +14,7 @@ import org.testng.Assert;
 import java.time.Duration;
 import java.util.List;
 
-public class Add_Hr_Steps {
+public class GSP_02_A_D_PositionCategoriesSteps {
     DialogContent dc = new DialogContent();
     LeftNav ln = new LeftNav();
     WebDriverWait wait = new WebDriverWait(GWD.getDriver(), Duration.ofSeconds(30));

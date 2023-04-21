@@ -5,14 +5,13 @@ import Pages.LeftNav;
 import Utilities.GWD;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
-import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;
 
 import java.util.List;
 
-public class _02_TugbaSteps {
+public class GSP_08_T_K_SchoolLocationsSteps {
 
     DialogContent dc = new DialogContent();
     LeftNav ln = new LeftNav();

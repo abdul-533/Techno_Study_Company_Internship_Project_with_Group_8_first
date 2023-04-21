@@ -15,7 +15,7 @@ import org.testng.Assert;
 import java.time.Duration;
 import java.util.List;
 
-public class Add_Edit_DeleteDiscountsSteps {
+public class GSP_12_A_D_DiscountsSteps {
     LeftNav ln = new LeftNav();
     DialogContent dc = new DialogContent();
     WebDriverWait wait = new WebDriverWait(GWD.getDriver(), Duration.ofSeconds(30));

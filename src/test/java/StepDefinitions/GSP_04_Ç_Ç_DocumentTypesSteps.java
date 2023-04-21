@@ -5,14 +5,13 @@ import Pages.LeftNav;
 import Utilities.GWD;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
-import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;
 
 import java.util.List;
 
-public class CaglaSteps {
+public class GSP_04_Ç_Ç_DocumentTypesSteps {
 
     DialogContent dc = new DialogContent();
     LeftNav ln = new LeftNav();

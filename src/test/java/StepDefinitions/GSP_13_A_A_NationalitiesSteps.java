@@ -1,14 +1,12 @@
 package StepDefinitions;
 
 import Pages.DialogContent;
-import Pages.LeftNav;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class _03_NationalitiesSteps {
+public class GSP_13_A_A_NationalitiesSteps {
     DialogContent dc = new DialogContent();
 
     @And("Enter required informations")

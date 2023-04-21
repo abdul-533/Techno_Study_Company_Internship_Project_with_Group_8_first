@@ -9,7 +9,7 @@ import io.cucumber.java.en.When;
 
 import java.util.List;
 
-public class HandeSteps {
+public class GSP_06_H_Ç_PositionsSteps {
 
     DialogContent dc = new DialogContent();
     LeftNav ln = new LeftNav();
