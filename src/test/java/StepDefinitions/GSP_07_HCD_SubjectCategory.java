@@ -6,7 +6,7 @@ import io.cucumber.java.en.And;
 
 import java.util.List;
 
-public class _07_ {
+public class GSP_07_HCD_SubjectCategory {
     DialogContent dg = new DialogContent();
 
     @And("sending new category")
