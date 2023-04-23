@@ -13,8 +13,7 @@ public class Hooks {
     @After
     public void after(Scenario senaryo) {
         System.out.println("Senaryo bitdi");
-       // ExcelUtility.writeExcel("src/test/java/ApachePOI/resource/ScenarioStatus.xlsx",
-              //  senaryo, GWD.threadBrowserGet());
+        ExcelUtility.writeExcel("src/test/java/ApachePOI/resource/ScenarioStatus.xlsx", senaryo, GWD.threadBrowserGet());
 
         if (senaryo.isFailed()) {
             TakesScreenshot ts = (TakesScreenshot) GWD.getDriver();
