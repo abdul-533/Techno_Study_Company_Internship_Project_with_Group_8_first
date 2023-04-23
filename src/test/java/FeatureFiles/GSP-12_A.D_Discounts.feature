@@ -4,7 +4,7 @@ Feature:  Add-Edit-Delete Discounts under Parameters Setup
     Given Navigate to Campus
     And Enter walid username as "turkeyts", password as "TechnoStudy123 " and click to login button
     Then User should login successfully
-
+@Alperen
   Scenario: User Add Discount
     When User navigate to discounts Alperen
       | setup      |
@@ -17,7 +17,7 @@ Feature:  Add-Edit-Delete Discounts under Parameters Setup
       | priority       | 53             |
     Then Click to save button
     And Success message should be displayed
-
+  @Alperen
   Scenario: User Edit Discount
     When User navigate to discounts Alperen
       | setup      |
@@ -28,7 +28,7 @@ Feature:  Add-Edit-Delete Discounts under Parameters Setup
       | description | TechnoStudyGR99 |
     Then Click to save button
     And Success message should be displayed
-
+  @Alperen
   Scenario: User Delete Discount
     When User navigate to discounts Alperen
       | setup      |
@@ -36,7 +36,7 @@ Feature:  Add-Edit-Delete Discounts under Parameters Setup
       | discounts  |
     Then Click to delete button Discounts
     Then Success message should be displayed
-
+  @Alperen @Negative
   Scenario: Negative Test 1
     When User navigate to discounts Alperen
       | setup      |
@@ -49,7 +49,7 @@ Feature:  Add-Edit-Delete Discounts under Parameters Setup
       | priority       | 53 |
     Then Click to save button
     And already exists message should be displayed Discount
-
+  @Alperen
     Scenario: Positive Test 1
       When User navigate to discounts Alperen
         | setup      |

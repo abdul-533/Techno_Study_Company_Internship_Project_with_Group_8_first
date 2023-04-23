@@ -9,6 +9,7 @@ Feature: Nationalities Account Functionality
       | edSetup           |
       | subjectCategories |
 
+  @Haydar
   Scenario: Create new Subject Categories
     And Click on element add button
     And Enter required informations
@@ -17,7 +18,7 @@ Feature: Nationalities Account Functionality
     And Click to save button
     Then Success message should be displayed
 
-  @Negative
+  @Haydar @Negative
   Scenario:  User shouldn't  be able to add (create) new Subject Categories with same name
     And Click on element add button
     And Enter required informations
@@ -26,11 +27,13 @@ Feature: Nationalities Account Functionality
     And Click to save button
     Then Unsuccessful message should be displayed
 
+  @Haydar
   Scenario: User should be able to Edit Subject Categories
     And Click to edit button and change name
       | _Group__008 | _Group__00800 |
     Then Success message should be displayed
 
+  @Haydar
   Scenario: User should be able to Subject Categories
 
     And  Click to delete button
@@ -38,7 +41,7 @@ Feature: Nationalities Account Functionality
 
     Then Success message should be displayed
 
-  @Negative
+  @Haydar @Negative
   Scenario: User shouldn't be able to access deleted Subject Categories
     And  Click to search button
       | searchInput | _Group__00800 |

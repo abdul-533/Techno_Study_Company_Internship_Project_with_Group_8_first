@@ -10,7 +10,7 @@ Feature: Add Edit Delete Positions from HR-ATTESTATIONS
       | SetupAtAttestations   |
     Then Click on the element to HR-ATTESTATIONS in Dialog
       | addButton |
-
+@Aykut
   Scenario: A,E,D Positions from HR-ATTESTATIONS functionality
     And  Enter a new name to HR-ATTESTATIONS in Dialog Content
       | nameInput | Aykuttechno |
@@ -29,7 +29,7 @@ Feature: Add Edit Delete Positions from HR-ATTESTATIONS
       | deleteDialogBtn            |
 
     And  User should see succesfully information frame
-
+  @Aykut @Negative
   Scenario: Negative Test Case see to same name
     And  Enter a new name to HR-ATTESTATIONS in Dialog Content
       | nameInput | Aykuttechno |
@@ -43,7 +43,7 @@ Feature: Add Edit Delete Positions from HR-ATTESTATIONS
       | saveButton |
 
     Then  User should see succesfully error message
-
+  @Aykut
   Scenario: Positive Test Case see to created
 
     And  Enter a new name to HR-ATTESTATIONS in Dialog Content

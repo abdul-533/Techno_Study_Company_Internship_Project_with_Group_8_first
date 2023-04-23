@@ -4,7 +4,7 @@ Feature: Login Functionality
     Given Navigate to Campus
     And Enter walid username as "turkeyts", password as "TechnoStudy123 " and click to login button
     Then User should login successfully
-
+@Kubilay
     Scenario: Positive Test Case
       When User navigate to GradeLevels
         | setup |
@@ -17,7 +17,7 @@ Feature: Login Functionality
         | orderAdd |  34123  |
       And Click to save button
       Then Success message should be displayed
-
+  @Kubilay @Negative
       Scenario: Negative Test Case
         When User navigate to GradeLevels
           | setup |
@@ -30,7 +30,7 @@ Feature: Login Functionality
           | orderAdd |  34123  |
         And Click to save button
         Then Default message should be displayed
-
+  @Kubilay
     Scenario: Create discounts account, add,edit and delete this account
       When User navigate to GradeLevels
       | setup |

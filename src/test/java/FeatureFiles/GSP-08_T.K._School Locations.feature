@@ -9,6 +9,7 @@ Feature: Add Locations Functionality
       | schoolSetup |
       | locations   |
 
+  @Tugba
   Scenario: Positive Create
     And Click add button
     And Enter required informations
@@ -18,7 +19,7 @@ Feature: Add Locations Functionality
     And Click to save button
     Then Success message should be displayed
 
-  @Negative
+  @Tugba @Negative
   Scenario: Negative Create
     And Click add button
     And Enter required informations
@@ -28,18 +29,20 @@ Feature: Add Locations Functionality
     And Click to save button
     Then Unsuccessful message should be displayed
 
+  @Tugba
   Scenario: Positive Edit
     And Click edit button and change name
       | TechnoStudy | NewTechnoStudy |
     And Click to save button
     Then Success message should be displayed
 
+  @Tugba
   Scenario: Positive Delete
     And Click delete button
       | NewTechnoStudy |
     Then Success message should be displayed
 
-  @Negative
+  @Tugba @Negative
   Scenario: Negative Delete
     Then There is no date with this name
       | NewTechnoStudy |

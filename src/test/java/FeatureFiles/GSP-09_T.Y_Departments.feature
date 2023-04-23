@@ -8,7 +8,7 @@ Feature: Add Edit Delete Positions from DP
       | setup       |
       | schoolSetup |
       | departments |
-
+@Tolunay
   Scenario: A,E,D Positions from DP functionality
 
     Then Click on the element in Dialog
@@ -31,7 +31,7 @@ Feature: Add Edit Delete Positions from DP
       | deleteDialogBtn |
 
     And  User should see succesfully information
-
+  @Tolunay
   Scenario: Positive Test Case see to massage
 
     Then Click on the element in Dialog
@@ -42,7 +42,7 @@ Feature: Add Edit Delete Positions from DP
     And  Click on the element in Dialog
       | saveButton |
     And User should see succesfully created
-
+  @Tolunay @Negative
   Scenario: Negative Test Case see to error massage
 
     Then Click on the element in Dialog
@@ -60,7 +60,7 @@ Feature: Add Edit Delete Positions from DP
     And  Click on the element in Dialog
       | saveButton |
     And User should see error name msg
-
+  @Tolunay
   Scenario: Positive Test Case see to updated massage
 
     Then Click on the element in Dialog
@@ -80,7 +80,7 @@ Feature: Add Edit Delete Positions from DP
     Then Click on the element in Dialog
       | saveButton |
     And User should see succesfully updated
-
+  @Tolunay @Negative
   Scenario: Negative Test Case see to can't left blank!
 
     Then Click on the element in Dialog
@@ -88,7 +88,7 @@ Feature: Add Edit Delete Positions from DP
       | nameInput |
       | codeInput |
     Then User should see this field cannot left blank
-
+  @Tolunay
   Scenario: Negative Test Case see to same code
 
     Then Click on the element in Dialog

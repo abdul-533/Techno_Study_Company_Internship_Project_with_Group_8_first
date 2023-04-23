@@ -9,6 +9,7 @@ Feature: Add Bank Account Functionality
       | parameters   |
       | bankAccounts |
 
+  @Abdul
   Scenario: Create new Bank Accounts
 
     And Click on element add button
@@ -20,7 +21,7 @@ Feature: Add Bank Account Functionality
     And Click to save button
     Then Success message should be displayed
 
-  @Negative
+  @Abdul @Negative
   Scenario:  User shouldn't  be able to add (create) new Bank Account with same data
     And Click on element add button
 
@@ -31,6 +32,7 @@ Feature: Add Bank Account Functionality
     And Click to save button
     Then Unsuccessful message should be displayed
 
+  @Abdul
   Scenario: User should be able to Edit Bank Account
     And Click to edit button and change inputs
       | nameInput      | Group_08            |
@@ -39,6 +41,7 @@ Feature: Add Bank Account Functionality
     And Click to save button
     Then Success message should be displayed
 
+  @Abdul
   Scenario: User should be able to Delete Bank Account
 
     And  Click to delete button
@@ -46,7 +49,7 @@ Feature: Add Bank Account Functionality
 
     Then Success message should be displayed
 
-  @Negative
+  @Abdul @Negative
   Scenario: User shouldn't be able to access deleted Bank Account
     And  Click to search button
       | searchInput | Group_08 |

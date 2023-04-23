@@ -9,6 +9,7 @@ Feature: Fields Account Functionality
       | parameters |
       | fields     |
 
+  @Doga
   Scenario: Create new Fields
     And Click on element add button
     And Enter required informations
@@ -17,7 +18,7 @@ Feature: Fields Account Functionality
     And Click to save button
     Then Success message should be displayed
 
-  @Negative
+  @Doga @Negative
   Scenario:  User shouldn't  be able to add (create) new Fields with same name
     And Click on element add button
     And Enter required informations
@@ -26,11 +27,13 @@ Feature: Fields Account Functionality
     And Click to save button
     Then Unsuccessful message should be displayed
 
+  @Doga
   Scenario: User should be able to Edit Fields
     And Click to edit button and change name
       | Group_0008 | New_Group_0008 |
     Then Success message should be displayed
 
+  @Doga
   Scenario: User should be able to Delete Fields
 
     And  Click to delete button
@@ -38,7 +41,7 @@ Feature: Fields Account Functionality
 
     Then Success message should be displayed
 
-  @Negative
+  @Doga @Negative
   Scenario: User shouldn't be able to access deleted Fields
     And  Click to search button
       | searchInput | Group_0008 |

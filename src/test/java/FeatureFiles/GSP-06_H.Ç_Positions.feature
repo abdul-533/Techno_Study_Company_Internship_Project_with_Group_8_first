@@ -5,6 +5,7 @@ Feature: Add Positions Functionality
     And Enter walid username as "turkeyts", password as "TechnoStudy123 " and click to login button
     Then User should login successfully
 
+  @Hande
   Scenario: Positive Create
     When Navigate to Positions
       | humanResourcesLeftNav |
@@ -17,6 +18,7 @@ Feature: Add Positions Functionality
     And Click save button
     Then Success message should be displayed
 
+  @Hande @Negative
   Scenario: Negative Create
     When Navigate to Positions
       | humanResourcesLeftNav |
@@ -29,6 +31,7 @@ Feature: Add Positions Functionality
     And Click save button
     Then Already exist should be displayed
 
+  @Hande
   Scenario: Positive Edit
     When Navigate to Positions
       | humanResourcesLeftNav |
@@ -38,6 +41,7 @@ Feature: Add Positions Functionality
       | nameInput | hhhh |
     Then Success message should be displayed
 
+  @Hande
   Scenario: Positive Delete
     When Navigate to Positions
       | humanResourcesLeftNav |
@@ -47,6 +51,7 @@ Feature: Add Positions Functionality
       | hhhh |
     Then Success message should be displayed
 
+  @Hande @Negative
   Scenario: Negative Delete
     When Navigate to Positions
       | humanResourcesLeftNav |

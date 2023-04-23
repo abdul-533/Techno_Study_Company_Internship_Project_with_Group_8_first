@@ -9,6 +9,7 @@ Feature: Nationalities Account Functionality
       | parameters    |
       | nationalities |
 
+  @Abdul
   Scenario: Create new Nationalities
     And Click on element add button
     And Enter required informations
@@ -16,7 +17,7 @@ Feature: Nationalities Account Functionality
     And Click to save button
     Then Success message should be displayed
 
-  @Negative
+  @Abdul @Negative
   Scenario:  User shouldn't  be able to add (create) new Nationalities with same name
     And Click on element add button
     And Enter required informations
@@ -24,11 +25,13 @@ Feature: Nationalities Account Functionality
     And Click to save button
     Then Unsuccessful message should be displayed
 
+  @Abdul
   Scenario: User should be able to Edit Nationalities
     And Click to edit button and change name
       | Group_8 | Group_008 |
     Then Success message should be displayed
 
+  @Abdul
   Scenario: User should be able to Delete Nationalities
 
     And  Click to delete button
@@ -36,7 +39,7 @@ Feature: Nationalities Account Functionality
 
     Then Success message should be displayed
 
-  @Negative
+  @Abdul @Negative
   Scenario: User shouldn't be able to access deleted Nationalities
     And  Click to search button
       | searchInput | Group_008 |

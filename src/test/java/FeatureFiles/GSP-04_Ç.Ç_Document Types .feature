@@ -15,7 +15,7 @@ Feature: Add Positions Functionality
       | nameInput | cc |
     And Click save button
     Then Success message should be displayed
-  @Cagla
+  @Cagla @Negative
   Scenario: Negative Create
     When Navigate to Document Types
       | setup         |
@@ -44,7 +44,7 @@ Feature: Add Positions Functionality
     And Search name and click delete buttons
       | ccc |
     Then Success message should be displayed
-  @Cagla
+  @Cagla @Negative
   Scenario: Negative Delete
     When Navigate to Document Types
       | setup         |
