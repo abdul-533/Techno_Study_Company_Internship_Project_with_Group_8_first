@@ -15,6 +15,11 @@
         <argLine>-Duser.language=en</argLine>
     </properties>
 
+    <!--  bana selenium
+    Bana testNG
+    baan cucumber
+    Bana Cucumber-TestNG lazim onu ver -->
+
     <dependencies>
         <!-- selenium icin-->
         <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
@@ -86,10 +91,12 @@
             <version>4.1.0</version>
         </dependency>
 
+        <!--sQL icin baqlanti bilgilerini indiren sunu-->
+        <!-- JDBC - MySql için eklendi Java DAta Base Connector-->
         <dependency>
-            <groupId>javazoom</groupId>
-            <artifactId>jlayer</artifactId>
-            <version>1.0.1</version>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.18</version>
         </dependency>
 
 
