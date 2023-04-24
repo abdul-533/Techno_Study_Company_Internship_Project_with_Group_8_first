@@ -3,18 +3,25 @@ package StepDefinitions;
 import Pages.DialogContent;
 import Pages.LeftNav;
 import Utilities.GWD;
+import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import javazoom.jl.player.Player;
+
+import java.io.FileInputStream;
 
 public class _01_Login_Steps {
+
     DialogContent dc = new DialogContent();
     LeftNav ln = new LeftNav();
 
     @Given("Navigate to Campus")
     public void navigateToCampus() {
+
         GWD.getDriver().get("https://test.mersys.io/");
         GWD.getDriver().manage().window().maximize();
+        //muzik();
     }
 
     @And("Enter walid username as {string}, password as {string} and click to login button")
@@ -27,6 +34,17 @@ public class _01_Login_Steps {
     @Then("User should login successfully")
     public void userShouldLoginSuccessfully() {
         dc.verifyContainsTextFunction(dc.getWebElement("txtTechnoStudy"), "Techno Study");
+    }
+
+    public void muzik(){
+
+        try {
+            FileInputStream fileInputStream = new FileInputStream("src/test/java/ApachePOI/resource/Aleyna Tilki Başıma Belasın.mp3");
+            Player player = new Player(fileInputStream);
+            player.play();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
 
