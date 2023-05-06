@@ -1,0 +1,6510 @@
+{
+	"info": {
+		"_postman_id": "cc420f33-8e51-41b9-bc07-f4073f63ef5f",
+		"name": "test.mersys.io",
+		"description": "**Techno Study** _**Campus**_ web uygulaması olan [**https://test.mersys.io**](https://demo.mersys.io) sitesine ait modüllerin API testleridir.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23483208",
+		"_collection_link": "https://crimson-flare-700610.postman.co/workspace/Techno-Study-TEAM1~a85cf033-56cc-4b63-9679-c0162ae06c4f/collection/23483208-cc420f33-8e51-41b9-bc07-f4073f63ef5f?action=share&creator=23483208&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "+Setup",
+			"item": [
+				{
+					"name": "Parameters",
+					"item": [
+						{
+							"name": "Countries",
+							"item": [
+								{
+									"name": "Login",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "oauth2",
+											"oauth2": [
+												{
+													"key": "tokenType",
+													"value": "",
+													"type": "string"
+												},
+												{
+													"key": "addTokenTo",
+													"value": "header",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"username\": \"{{username}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"rememberMe\": \"true\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/auth/login",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "List Country (Empty Search)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Successful POST request\", function () {\r",
+													"    pm.expect(pm.response.code).to.be.oneOf([200]);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}countries/search",
+											"host": [
+												"{{url}}countries"
+											],
+											"path": [
+												"search"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create Country",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var body=pm.response.json();\r",
+													"var id=body.id;\r",
+													"var name=body.name;\r",
+													"console.log(body , name , id); // kod doğruluk kontrolü\r",
+													"\r",
+													"pm.collectionVariables.set(\"countryID\", id); // collection variable set olacak\r",
+													"pm.collectionVariables.set(\"countryName\", body.name);\r",
+													"\r",
+													"pm.test(\"Successful POST request\", function () {\r",
+													"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": null,\r\n  \"name\": \"{{$randomCountry}} {{$randomInt}}\",\r\n  \"code\": \"{{$randomCountryCode}} {{$randomInt}}\",\r\n  \"translateName\": [],\r\n  \"hasState\": false\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}countries",
+											"host": [
+												"{{url}}countries"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create Again Same Country (NEGATIVE)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": null,\r\n  \"name\": \"{{countryName}}\",\r\n  \"code\": null,\r\n  \"translateName\": [],\r\n  \"hasState\": false\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}countries",
+											"host": [
+												"{{url}}countries"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update Country",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": \"{{countryID}}\",\r\n  \"name\": \"foobaristan {{$randomInt}}\",\r\n  \"code\": \"kod {{$randomInt}}\",\r\n  \"translateName\": null,\r\n  \"hasState\": false\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}countries",
+											"host": [
+												"{{url}}countries"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Country",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}countries/{{countryID}}",
+											"host": [
+												"{{url}}countries"
+											],
+											"path": [
+												"{{countryID}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Again Same Country (NEGATIVE)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": \"{{countryID}}\",\r\n  \"name\": \"hqn {{$randomInt}}\",\r\n  \"code\": \"Kod {{$randomInt}}\",\r\n  \"translateName\": null,\r\n  \"hasState\": false\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}countries/{{countryID}}",
+											"host": [
+												"{{url}}countries"
+											],
+											"path": [
+												"{{countryID}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update Deleted Country (NEGATIVE)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Body matches string\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"Country not found\");\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": \"{{countryID}}\",\r\n  \"name\": \"foobaristan {{$randomInt}}\",\r\n  \"code\": \"kod {{$randomInt}}\",\r\n  \"translateName\": null,\r\n  \"hasState\": false\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}countries",
+											"host": [
+												"{{url}}countries"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "States",
+							"item": [
+								{
+									"name": "Login",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "oauth2",
+											"oauth2": [
+												{
+													"key": "tokenType",
+													"value": "",
+													"type": "string"
+												},
+												{
+													"key": "addTokenTo",
+													"value": "header",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"username\": \"{{username}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"rememberMe\": \"true\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/auth/login",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "List State",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Successful POST request\", function () {\r",
+													"    pm.expect(pm.response.code).to.be.oneOf([200]);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}states/search",
+											"host": [
+												"{{url}}states"
+											],
+											"path": [
+												"search"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create1) Create a new State from existing Countries",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var body=pm.response.json();\r",
+													"var id=body.id;\r",
+													"var name=body.name;\r",
+													"var shortName=body.shortName;\r",
+													"\r",
+													"console.log(body,id,name,shortName);\r",
+													"pm.collectionVariables.set(\"StateID\",id);\r",
+													"pm.collectionVariables.set(\"StateName\",name);\r",
+													"pm.collectionVariables.set(\"StateShortName\",shortName);\r",
+													"\r",
+													"pm.test(\"Successful POST request\", function () {\r",
+													"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\": null,\r\n    \"country\": {\r\n        \"id\": \"63a45bdbcb75ee5c2199a8cf\",\r\n        \"name\": null,\r\n        \"shortName\": null,\r\n\r\n        \"translateName\": null,\r\n        \"code\": null,\r\n        \"hasState\": false\r\n    },\r\n    \"name\": \"melek sehir\",\r\n    \"translateName\": [],\r\n    \"shortName\": \"ms\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}states",
+											"host": [
+												"{{url}}states"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create Negative(Create the same  State)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\": null,\r\n    \"country\": {\r\n        \"id\": \"63a45bdbcb75ee5c2199a8cf\",\r\n        \"name\": null,\r\n        \"shortName\": null,\r\n        \"translateName\": null,\r\n        \"code\": null,\r\n        \"hasState\": false\r\n    },\r\n    \"name\": \"{{StateName}}\",\r\n    \"translateName\": [],\r\n    \"shortName\": \"{{StateShortName}}\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}states",
+											"host": [
+												"{{url}}states"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Edit1) Update State from existing Countries",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\": \"{{StateID}}\",\r\n    \"name\": \"Meelek seehir\",\r\n    \"shortName\": \"ms\",\r\n    \"country\": {\r\n        \"id\": \"63a45bdbcb75ee5c2199a8cf\"\r\n    },\r\n    \"translateName\": []\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}states",
+											"host": [
+												"{{url}}states"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete1) Delete new created State from existing Countries",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{url}}states/{{StateID}}",
+											"host": [
+												"{{url}}states"
+											],
+											"path": [
+												"{{StateID}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Negative(Delete the deleted State by ID)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{url}}states/{{StateID}}",
+											"host": [
+												"{{url}}states"
+											],
+											"path": [
+												"{{StateID}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Edit Netative(Update the deleted State)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\": \"{{StateID}}\",\r\n    \"country\": {\r\n        \"id\": \"63a45bdbcb75ee5c2199a8cf\",\r\n        \"name\": null,\r\n        \"shortName\": null,\r\n        \"translateName\": null,\r\n        \"code\": null,\r\n        \"hasState\": false\r\n    },\r\n    \"name\": \"Zhambul\",\r\n    \"translateName\": [],\r\n    \"shortName\": \"ZB\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}states",
+											"host": [
+												"{{url}}states"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create a new Country with State",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var body=pm.response.json();\r",
+													"var id=body.id;\r",
+													"var name=body.name;\r",
+													"console.log(body , name , id); \r",
+													"\r",
+													"pm.collectionVariables.set(\"countryID\", id);\r",
+													"pm.collectionVariables.set(\"countryName\", body.name);\r",
+													"\r",
+													"pm.test(\"Successful POST request\", function () {\r",
+													"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": null,\r\n  \"name\": \"{{$randomCountry}} {{$randomInt}}\",\r\n  \"code\": \"{{$randomCountryCode}} {{$randomInt}}\",\r\n  \"translateName\": [],\r\n  \"hasState\": true\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}countries",
+											"host": [
+												"{{url}}countries"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create2) Create a new State from new created Country",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var body=pm.response.json();\r",
+													"var id=body.id;\r",
+													"var name=body.name;\r",
+													"var shortName=body.shortName;\r",
+													"\r",
+													"console.log(body,id,name,shortName);\r",
+													"pm.collectionVariables.set(\"StateID\",id);\r",
+													"pm.collectionVariables.set(\"StateName\",name);\r",
+													"pm.collectionVariables.set(\"StateShortName\",shortName);\r",
+													"\r",
+													"pm.test(\"Successful POST request\", function () {\r",
+													"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\": null,\r\n    \"country\": {\r\n        \"id\": \"{{countryID}}\",\r\n        \"name\": null,\r\n        \"shortName\": null,\r\n\r\n        \"translateName\": null,\r\n        \"code\": null,\r\n        \"hasState\": false\r\n    },\r\n    \"name\": \"melek sehir\",\r\n    \"translateName\": [],\r\n    \"shortName\": \"ms\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}states",
+											"host": [
+												"{{url}}states"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Negative(Delete the Country wich has a State)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 500\", function () {\r",
+													"    pm.response.to.have.status(500);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Body matches string\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"Could not delete from the specified record. Because the record being used by another document(s) : State\");\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{url}}countries/{{countryID}}",
+											"host": [
+												"{{url}}countries"
+											],
+											"path": [
+												"{{countryID}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete2)Delete the State by ID",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{url}}states/{{StateID}}",
+											"host": [
+												"{{url}}states"
+											],
+											"path": [
+												"{{StateID}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete the new created Country by ID",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{url}}countries/{{countryID}}",
+											"host": [
+												"{{url}}countries"
+											],
+											"path": [
+												"{{countryID}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Negative(Delete the deleted Country)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{url}}countries/{{countryID}}",
+											"host": [
+												"{{url}}countries"
+											],
+											"path": [
+												"{{countryID}}"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Cities",
+							"item": [
+								{
+									"name": "Login",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"username\": \"{{username}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"rememberMe\": true\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/auth/login",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "List Cities (EmptySearch)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Successful POST request\", function () {\r",
+													"    pm.expect(pm.response.code).to.be.oneOf([200]);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}cities/search",
+											"host": [
+												"{{url}}cities"
+											],
+											"path": [
+												"search"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create a new City from existing Country",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var body=pm.response.json();\r",
+													"var id=body.id;\r",
+													"var name=body.name;\r",
+													"console.log(body,id,name);\r",
+													"\r",
+													"pm.collectionVariables.set(\"cityID\",id);\r",
+													"pm.collectionVariables.set(\"cityName\",name);\r",
+													"\r",
+													"pm.test(\"Successful POST request\", function () {\r",
+													"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\": null,\r\n    \"country\": {\r\n        \"id\": \"63a41a0dcb75ee5c2199a8bc\", \r\n        \"name\": null,\r\n        \"shortName\": null,\r\n        \"translateName\": null,\r\n        \"code\": null,\r\n        \"hasState\": false\r\n    },\r\n    \"state\": null,\r\n    \"name\": \"{{$randomCity}}\",\r\n    \"shortName\": null,\r\n    \"translateName\": [],\r\n    \"code\": null\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}cities",
+											"host": [
+												"{{url}}cities"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create Again Same City (NEGATIVE)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\": null,\r\n    \"country\": {\r\n        \"id\": \"63a41a0dcb75ee5c2199a8bc\", \r\n        \"name\": null,\r\n        \"shortName\": null,\r\n        \"translateName\": null,\r\n        \"code\": null,\r\n        \"hasState\": false\r\n    },\r\n    \"state\": null,\r\n    \"name\": \"{{cityName}}\",\r\n    \"shortName\": null,\r\n    \"translateName\": [],\r\n    \"code\": null\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}cities",
+											"host": [
+												"{{url}}cities"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create Country for City Creation",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var body=pm.response.json();\r",
+													"var id=body.id;\r",
+													"var name=body.name;\r",
+													"console.log(body , name , id); // kod doğruluk kontrolü\r",
+													"\r",
+													"pm.collectionVariables.set(\"countryID\", id); // collection variable set olacak\r",
+													"pm.collectionVariables.set(\"countryName\", body.name);\r",
+													"\r",
+													"pm.test(\"Successful POST request\", function () {\r",
+													"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": null,\r\n  \"name\": \"{{$randomCountry}} {{$randomInt}}\",\r\n  \"code\": \"{{$randomCountryCode}} {{$randomInt}}\",\r\n  \"translateName\": [],\r\n  \"hasState\": false\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}countries",
+											"host": [
+												"{{url}}countries"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create a new City from just existing Country",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var body=pm.response.json();\r",
+													"var id=body.id;\r",
+													"var name=body.name;\r",
+													"console.log(body,id,name);\r",
+													"\r",
+													"pm.collectionVariables.set(\"cityID\",id);\r",
+													"pm.collectionVariables.set(\"cityName\",name);\r",
+													"\r",
+													"pm.test(\"Successful POST request\", function () {\r",
+													"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\": null,\r\n    \"country\": {\r\n        \"id\": \"63a41a0dcb75ee5c2199a8bc\", \r\n        \"name\": null,\r\n        \"shortName\": null,\r\n        \"translateName\": null,\r\n        \"code\": null,\r\n        \"hasState\": false\r\n    },\r\n    \"state\": null,\r\n    \"name\": \"{{$randomCity}}\",\r\n    \"shortName\": null,\r\n    \"translateName\": [],\r\n    \"code\": null\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}cities",
+											"host": [
+												"{{url}}cities"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update City From Existing Country",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": \"{{cityID}}\",\r\n  \"name\": \"{{cityName}} t12\",\r\n  \"country\": {\r\n    \"id\": \"{{countryID}}\"\r\n  },\r\n  \"state\": null,\r\n  \"translateName\": []\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}cities",
+											"host": [
+												"{{url}}cities"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete City of New Created from existing Country",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{url}}cities/{{cityID}}",
+											"host": [
+												"{{url}}cities"
+											],
+											"path": [
+												"{{cityID}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Again Same City of New Created from existing Country",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{url}}cities/{{cityID}}",
+											"host": [
+												"{{url}}cities"
+											],
+											"path": [
+												"{{cityID}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update The Deleted City (NEGATIVE)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Body matches string\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"Can't find City\");\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": \"{{cityID}}\",\r\n  \"name\": \"{{cityName}} t12\",\r\n  \"country\": {\r\n    \"id\": \"{{countryID}}\"\r\n  },\r\n  \"state\": null,\r\n  \"translateName\": []\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}cities",
+											"host": [
+												"{{url}}cities"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Citizenships",
+							"item": [
+								{
+									"name": "Login",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"username\": \"{{username}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"rememberMe\": true\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/auth/login",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "List Citizenships (Empty Search)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Successful POST request\", function () {\r",
+													"    pm.expect(pm.response.code).to.be.oneOf([200]);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}citizenships/search",
+											"host": [
+												"{{url}}citizenships"
+											],
+											"path": [
+												"search"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create Citizenships",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var body=pm.response.json();\r",
+													"var id=body.id;\r",
+													"var name=body.name;\r",
+													"console.log(body , name , id); // kod doğruluk kontrolü\r",
+													"\r",
+													"pm.collectionVariables.set(\"citizenShipID\", id); // collection variable set olacak\r",
+													"pm.collectionVariables.set(\"citizenShipName\", body.name);\r",
+													"\r",
+													"pm.test(\"Successful POST request\", function () {\r",
+													"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\": null,\r\n    \"name\": \"citizenship_{{$randomCity}}\",\r\n    \"shortName\": \"cs_{{$randomAlphaNumeric}}\",\r\n    \"translateName\": []\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}citizenships",
+											"host": [
+												"{{url}}citizenships"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create Again Same Citizenships (NEGATIVE)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": null,\r\n  \"name\": \"{{citizenShipName}}\",\r\n  \"shortName\": null,\r\n  \"translateName\": []\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}citizenships",
+											"host": [
+												"{{url}}citizenships"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update Citizenships",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\": \"{{citizenShipID}}\",\r\n    \"name\": \"citizenship_{{$randomCity}}\",\r\n    \"shortName\": \"cs_{{$randomAlphaNumeric}}\",\r\n    \"translateName\": []\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}citizenships",
+											"host": [
+												"{{url}}citizenships"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Citizenships",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}citizenships/{{citizenShipID}}",
+											"host": [
+												"{{url}}citizenships"
+											],
+											"path": [
+												"{{citizenShipID}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Again Same Citizenships (NEGATIVE)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}citizenships/{{citizenShipID}}",
+											"host": [
+												"{{url}}citizenships"
+											],
+											"path": [
+												"{{citizenShipID}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update Deleted Citizenships (NEGATIVE)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Body matches string\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"Citizenship not found\");\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\": \"{{citizenShipID}}\",\r\n    \"name\": \"citizenship_{{$randomCity}}\",\r\n    \"shortName\": \"cs_{{$randomAlphaNumeric}}\",\r\n    \"translateName\": []\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}citizenships",
+											"host": [
+												"{{url}}citizenships"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Nationalities",
+							"item": [
+								{
+									"name": "Login",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"username\": \"{{username}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"rememberMe\": \"true\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/auth/login",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create Nationalities",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": null,\r\n  \"name\": \"Georgiann\",\r\n  \"translateName\": []\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/nationality",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"nationality"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Search Nationalities",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"name\": \"Georgian\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/nationality/search",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"nationality",
+												"search"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update Nationalities",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": \"63b16ad5a82823009a165e82\",\r\n  \"name\": \"Georgianser\",\r\n  \"translateName\": []\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/nationality",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"nationality"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Nationalities",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/nationality/63c079c7bff29b76b07e2960",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"nationality",
+												"63c079c7bff29b76b07e2960"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Negatif",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function (){\r",
+													"    pm.response.to.have.status(400)\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/nationality/63c079c7bff29b76b07e2960",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"nationality",
+												"63c079c7bff29b76b07e2960"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Fees",
+							"item": [
+								{
+									"name": "Login",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"username\": \"{{username}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"rememberMe\": true\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/auth/login",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Add A New Fee",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var body=pm.response.json();\r",
+													"var id=body.id;\r",
+													"console.log(body);\r",
+													"\r",
+													"pm.collectionVariables.set(\"feeID\", id);\r",
+													"pm.collectionVariables.set(\"feeName\", body.name);\r",
+													"pm.collectionVariables.set(\"feeCode\", body.code);\r",
+													"pm.collectionVariables.set(\"feeIntCode\", body.intCode);\r",
+													"pm.collectionVariables.set(\"feePriority\", body.priority);\r",
+													"\r",
+													"pm.test(\"Successful POST request\", function () {\r",
+													"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\": null,\r\n    \"budgetAccountIntegrationCode\": \"{{$randomInt}}\",\r\n    \"name\": \"document{{$randomInt}}\",\r\n    \"code\": \"doc{{$randomInt}}\",\r\n    \"priority\": \"{{$randomInt}}\",\r\n    \"translateName\": [],\r\n    \"active\": true,\r\n    \"tenantId\": null\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}fee-types",
+											"host": [
+												"{{url}}fee-types"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Add A Exist Fee (Negative)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\": null,\r\n    \"budgetAccountIntegrationCode\": \"{{feeIntCode}}\",\r\n    \"name\": \"{{feeID}}\",\r\n    \"code\": \"{{feeCode}}\",\r\n    \"priority\": \"{{feePriority}}\",\r\n    \"translateName\": [],\r\n    \"active\": true,\r\n    \"tenantId\": null\r\n}\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}fee-types",
+											"host": [
+												"{{url}}fee-types"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update A Fee",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": \"{{feeID}}\",\r\n  \"name\": \"document{{$randomInt}}\",\r\n  \"translateName\": [],\r\n  \"code\": \"doc{{$randomInt}}\",\r\n  \"priority\": {{$randomInt}},\r\n  \"active\": true,\r\n  \"budgetAccountIntegrationCode\": \"{{$randomInt}}\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}fee-types",
+											"host": [
+												"{{url}}fee-types"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete A Fee",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}fee-types/{{feeID}}",
+											"host": [
+												"{{url}}fee-types"
+											],
+											"path": [
+												"{{feeID}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete A Non-Exist Fee (Negative)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}fee-types/{{feeID}}",
+											"host": [
+												"{{url}}fee-types"
+											],
+											"path": [
+												"{{feeID}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update A Non-Exist Fee (Negative)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": \"{{feeID}}\",\r\n  \"name\": \"document{{$randomInt}}\",\r\n  \"translateName\": [],\r\n  \"code\": \"doc{{$randomInt}}\",\r\n  \"priority\": {{$randomInt}},\r\n  \"active\": true,\r\n  \"budgetAccountIntegrationCode\": \"{{$randomInt}}\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}fee-types",
+											"host": [
+												"{{url}}fee-types"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get List of Fee Names",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}fee-types/search",
+											"host": [
+												"{{url}}fee-types"
+											],
+											"path": [
+												"search"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Discounts",
+							"item": [
+								{
+									"name": "Login",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"username\": \"{{username}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"rememberMe\": \"true\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/auth/login",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create  Discounts",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 201\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": null,\r\n  \"description\": \"seslim\",\r\n  \"code\": \"23\",\r\n  \"active\": true,\r\n  \"translateDescription\": [],\r\n  \"priority\": 19\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/discounts",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"discounts"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Search Discounts",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"description\": \"seslim\",\r\n  \"code\": \"23\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/discounts/search",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"discounts",
+												"search"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update Discounts",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": null,\r\n  \"description\": \"seslim1\",\r\n  \"code\": \"25\",\r\n  \"active\": true,\r\n  \"translateDescription\": [],\r\n  \"priority\": 20\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/discounts",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"discounts"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/discounts",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"discounts"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Negatif",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"\r",
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/discounts",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"discounts"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Grade Levels",
+							"item": [
+								{
+									"name": "Login",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"username\": \"{{username}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"rememberMe\": \"true\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/auth/login",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "ADD Grade Level",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var body = pm.response.json();\r",
+													"var gradeID = body.id;\r",
+													"var gradeName = body.name;\r",
+													"var gradeShortName = body.shortName;\r",
+													"\r",
+													"pm.collectionVariables.set(\"gradeID\", gradeID);\r",
+													"pm.collectionVariables.set(\"gradeName\", gradeName);\r",
+													"pm.collectionVariables.set(\"gradeShortName\", gradeShortName);\r",
+													"\r",
+													"pm.test(\"Status code is 201\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\": null,\r\n    \"name\": \"{{$randomAdjective}} _ {{$randomAlphaNumeric}}\",\r\n    \"shortName\": \"{{$randomAlphaNumeric}}{{$randomCurrencyCode}}\"\r\n}\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}grade-levels",
+											"host": [
+												"{{url}}grade-levels"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "ADD Grade Level Negative",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Body matches string\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"already exists.\");\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\": null,\r\n    \"name\": \"{{gradeName}}\",\r\n    \"shortName\": \"{{gradeShortName}}\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}grade-levels",
+											"host": [
+												"{{url}}grade-levels"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "EDIT Grade Level",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"var body = pm.response.json();\r",
+													"var gradeID = body.id;\r",
+													"var gradeName = body.name;\r",
+													"var gradeShortName = body.shortName;\r",
+													"pm.collectionVariables.set(\"gradeID\", gradeID);\r",
+													"pm.collectionVariables.set(\"gradeName\", gradeName);\r",
+													"pm.collectionVariables.set(\"gradeShortName\", gradeShortName);\r",
+													"\r",
+													"console.log(gradeName);"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": \"{{gradeID}}\",\r\n  \"name\": \"team1 {{gradeName}}\",\r\n  \"shortName\": \"t1 {{gradeShortName}}\",\r\n  \"nextGradeLevel\": null\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}grade-levels",
+											"host": [
+												"{{url}}grade-levels"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "DELETE Grade Level",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}grade-levels/{{gradeID}}",
+											"host": [
+												"{{url}}grade-levels"
+											],
+											"path": [
+												"{{gradeID}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "DELETE Grade Level Negative",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Body matches string\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"Grade Level not found.\");\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}grade-levels/{{gradeID}}",
+											"host": [
+												"{{url}}grade-levels"
+											],
+											"path": [
+												"{{gradeID}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "EDIT Grade Level Negative",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Body matches string\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"Grade Level not found.\");\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": \"{{gradeID}}\",\r\n  \"name\": \"team1 {{gradeName}}\",\r\n  \"shortName\": \"t1 {{gradeShortName}}\",\r\n  \"nextGradeLevel\": null\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}grade-levels",
+											"host": [
+												"{{url}}grade-levels"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "EDIT Grade Level Alt  Negative",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var body = pm.response.json();\r",
+													"var gradeMessage = body.message;\r",
+													"\r",
+													"pm.test(\"Body matches string\", function(){\r",
+													"    pm.expect(pm.response.text()).to.include(\"Name cannot be empty\");\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": \"{{gradeID}}\",\r\n  \"name\": null,\r\n  \"shortName\": null,\r\n  \"nextGradeLevel\": null\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}grade-levels",
+											"host": [
+												"{{url}}grade-levels"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Document Types",
+							"item": [
+								{
+									"name": "Login",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"username\": \"{{username}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"rememberMe\": \"true\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/auth/login",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Add Document",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"\r",
+													"var body=pm.response.json();\r",
+													"var id=body.id;\r",
+													"var name=body.name;\r",
+													"\r",
+													"pm.collectionVariables.set(\"documentID\", id);\r",
+													"pm.collectionVariables.set(\"documentName\", name);\r",
+													"\r",
+													"\r",
+													"pm.test(\"Status code is 201\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": null,\r\n  \"name\": \"{{$randomInt}} ->MK[ESK26]<- {{$randomInt}}\",\r\n  \"description\": \"MK-TR-ESK-26\",\r\n  \"attachmentStages\": [\r\n    \"STUDENT_REGISTRATION\",\r\n    \"EXAMINATION\",\r\n    \"EMPLOYMENT\",\r\n    \"CERTIFICATE\",\r\n    \"CONTRACT\",\r\n    \"DISMISSAL\"\r\n  ],\r\n  \"active\": {{$randomBoolean}},\r\n  \"required\": {{$randomBoolean}},\r\n  \"useCamera\": {{$randomBoolean}},\r\n  \"translateName\": [],\r\n  \"schoolId\": \"6390f3207a3bcb6a7ac977f9\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}attachments/create",
+											"host": [
+												"{{url}}attachments"
+											],
+											"path": [
+												"create"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Add Document Negative",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"\r",
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": \"{{documentID}}\",\r\n  \"name\": \"{{documentName}}\",\r\n  \"description\": \"MK-TR-ESK-26\",\r\n  \"attachmentStages\": [\r\n    \"STUDENT_REGISTRATION\",\r\n    \"EXAMINATION\",\r\n    \"EMPLOYMENT\",\r\n    \"CERTIFICATE\",\r\n    \"CONTRACT\",\r\n    \"DISMISSAL\"\r\n  ],\r\n  \"active\": {{$randomBoolean}},\r\n  \"required\": {{$randomBoolean}},\r\n  \"useCamera\": {{$randomBoolean}},\r\n  \"translateName\": [],\r\n  \"schoolId\": \"6390f3207a3bcb6a7ac977f9\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}attachments/create",
+											"host": [
+												"{{url}}attachments"
+											],
+											"path": [
+												"create"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Edit Document",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": \"{{documentID}}\",\r\n  \"name\": \"{{$randomInt}} ->MK[ESK26]TR<- {{$randomInt}}\",\r\n  \"description\": \"Muharrem Karapazar tarafından düzenlenmiştir.   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀        ... API TEAM1...\",\r\n  \"attachmentStages\": [\r\n    \"STUDENT_REGISTRATION\",\r\n    \"EXAMINATION\",\r\n    \"EMPLOYMENT\",\r\n    \"CERTIFICATE\",\r\n    \"CONTRACT\",\r\n    \"DISMISSAL\"\r\n  ],\r\n  \"schoolId\": \"6390f3207a3bcb6a7ac977f9\",\r\n  \"active\": {{$randomBoolean}},\r\n  \"required\": {{$randomBoolean}},\r\n  \"translateName\": [],\r\n  \"useCamera\": {{$randomBoolean}}\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}attachments",
+											"host": [
+												"{{url}}attachments"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Document",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}attachments/{{documentID}}",
+											"host": [
+												"{{url}}attachments"
+											],
+											"path": [
+												"{{documentID}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Document Negative",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400, Attachment Type with id: 633b338fe919fd14ad5ed187, not found\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}attachments/{{documentID}}",
+											"host": [
+												"{{url}}attachments"
+											],
+											"path": [
+												"{{documentID}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Edit Document Negative",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400, Attachment Type with id: 633b338fe919fd14ad5ed187, not found\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": \"{{documentID}}\",\r\n  \"name\": \"{{$randomInt}} ->MK[ESK26]TR<- {{$randomInt}}\",\r\n  \"description\": \"Muharrem Karapazar tarafından düzenlenmiştir.   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀        ... API TEAM1...\",\r\n  \"attachmentStages\": [\r\n    \"STUDENT_REGISTRATION\",\r\n    \"EXAMINATION\",\r\n    \"EMPLOYMENT\",\r\n    \"CERTIFICATE\",\r\n    \"CONTRACT\",\r\n    \"DISMISSAL\"\r\n  ],\r\n  \"schoolId\": \"6390f3207a3bcb6a7ac977f9\",\r\n  \"active\": {{$randomBoolean}},\r\n  \"required\": {{$randomBoolean}},\r\n  \"translateName\": [],\r\n  \"useCamera\": {{$randomBoolean}}\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}attachments",
+											"host": [
+												"{{url}}attachments"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Bank Accounts",
+							"item": []
+						},
+						{
+							"name": "Fields",
+							"item": [
+								{
+									"name": "Login Copy",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"username\": \"{{username}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"rememberMe\": true\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/auth/login",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Add A New Field",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var body=pm.response.json();\r",
+													"var id=body.id;\r",
+													"console.log(body);\r",
+													"\r",
+													"pm.collectionVariables.set(\"fieldID\", id);\r",
+													"pm.collectionVariables.set(\"fieldName\", body.name);\r",
+													"pm.collectionVariables.set(\"fieldCode\", body.code);\r",
+													"\r",
+													"pm.test(\"Successful POST request\", function () {\r",
+													"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": null,\r\n  \"name\": \"{{$randomMonth}}{{$randomInt}}\",\r\n  \"translateName\": [],\r\n  \"code\": \"code{{$randomInt}}\",\r\n  \"type\": \"STRING\",\r\n  \"children\": [],\r\n  \"systemField\": false,\r\n  \"systemFieldName\": null,\r\n  \"schoolId\": \"6390f3207a3bcb6a7ac977f9\"\r\n}\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}entity-field",
+											"host": [
+												"{{url}}entity-field"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Add A Exist Field (Negative)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": null,\r\n  \"name\": \"{{fieldName}}\",\r\n  \"translateName\": [],\r\n  \"code\": \"{{fieldCode}}\",\r\n  \"type\": \"STRING\",\r\n  \"children\": [],\r\n  \"systemField\": false,\r\n  \"systemFieldName\": null,\r\n  \"schoolId\": \"6390f3207a3bcb6a7ac977f9\"\r\n}\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}entity-field",
+											"host": [
+												"{{url}}entity-field"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update A Field",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": \"{{fieldID}}\",\r\n  \"name\": \"{{$randomMonth}}{{$randomInt}}\",\r\n  \"translateName\": [],\r\n  \"code\": \"{{$randomInt}}\",\r\n  \"type\": \"STRING\",\r\n  \"children\": [],\r\n  \"systemField\": false,\r\n  \"systemFieldName\": null,\r\n  \"schoolId\": \"6390f3207a3bcb6a7ac977f9\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}entity-field",
+											"host": [
+												"{{url}}entity-field"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete A Field",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 204\", function () {\r",
+													"    pm.response.to.have.status(204);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}entity-field/{{fieldID}}",
+											"host": [
+												"{{url}}entity-field"
+											],
+											"path": [
+												"{{fieldID}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete A Non-Exist Field (Negative)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}entity-field/{{fieldID}}",
+											"host": [
+												"{{url}}entity-field"
+											],
+											"path": [
+												"{{fieldID}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update A Non-Exist Field (Negative)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": \"{{fieldID}}\",\r\n  \"name\": \"{{$randomMonth}}{{$randomInt}}\",\r\n  \"translateName\": [],\r\n  \"code\": \"{{$randomInt}}\",\r\n  \"type\": \"STRING\",\r\n  \"children\": [],\r\n  \"systemField\": false,\r\n  \"systemFieldName\": null,\r\n  \"schoolId\": \"6390f3207a3bcb6a7ac977f9\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}entity-field",
+											"host": [
+												"{{url}}entity-field"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get List of Field Names",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"schoolId\": \"6390f3207a3bcb6a7ac977f9\",\r\n  \"name\": \"\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}entity-field/search",
+											"host": [
+												"{{url}}entity-field"
+											],
+											"path": [
+												"search"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Field Settings",
+							"item": [
+								{
+									"name": "Login",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"username\": \"{{username}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"rememberMe\": true\r\n}\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/auth/login",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update Fields Settings",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": \"63c1ce287af1ce63931a79eb\",\r\n  \"entityType\": \"EXAM\",\r\n  \"entityTypeId\": \"63aedebb7553e815dd8ee6da\",\r\n  \"schoolId\": \"6390f3207a3bcb6a7ac977f9\",\r\n  \"fieldId\": \"63b720daebf97e7d4ea68583\",\r\n  \"parentFieldId\": null,\r\n  \"order\": 24,\r\n  \"enabled\": false,\r\n  \"required\": false,\r\n  \"array\": false,\r\n  \"size\": 0\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/entity-field-setting",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"entity-field-setting"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Search Fields Settings",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"schoolId\": \"6390f3207a3bcb6a7ac977f9\",\r\n  \"entityType\": \"STUDENT\",\r\n  \"entityTypeId\": null,\r\n  \"filteringParent\": true\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/entity-field-setting/search",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"entity-field-setting",
+												"search"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Search Fields Settings",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"schoolId\": \"6390f3207a3bcb6a7ac977f9\",\r\n  \"entityType\": \"EMPLOYEE\",\r\n  \"entityTypeId\": null,\r\n  \"filteringParent\": true\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/entity-field-setting/search",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"entity-field-setting",
+												"search"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Search Fields Settings",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"schoolId\": \"6390f3207a3bcb6a7ac977f9\",\r\n  \"entityType\": \"EXAM\",\r\n  \"entityTypeId\": \"63aedebb7553e815dd8ee6da\",\r\n  \"filteringParent\": true\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/entity-field-setting/search",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"entity-field-setting",
+												"search"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Material İcons",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/material-outline-icons.f6d059ab2b3a7529.ttf?8ot508",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"material-outline-icons.f6d059ab2b3a7529.ttf"
+											],
+											"query": [
+												{
+													"key": "8ot508",
+													"value": null
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "School Setup",
+					"item": [
+						{
+							"name": "Locations",
+							"item": [
+								{
+									"name": "Login",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"username\": \"{{username}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"rememberMe\": \"true\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/auth/login",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "ADD Locations",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var body = pm.response.json();\r",
+													"var locationsID = body.id;\r",
+													"var locationsName = body.name;\r",
+													"var locationShortName = body.shortName;\r",
+													"var locationsCap = body.capacity;\r",
+													"var schoolId = body.school;\r",
+													"\r",
+													"pm.collectionVariables.set(\"locationsID\", locationsID);\r",
+													"pm.collectionVariables.set(\"locationsName\", locationsName);\r",
+													"pm.collectionVariables.set(\"locationShortName\", locationShortName);\r",
+													"pm.collectionVariables.set(\"locationsCap\", locationsCap);\r",
+													"pm.collectionVariables.set(\"schoolId\", schoolId);\r",
+													"\r",
+													"pm.test(\"Status code is 201\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\": null,\r\n    \"name\": \"{{$randomAdjective}}{{$randomInt}}\",\r\n    \"shortName\": \"{{$randomInt}}{{$randomCurrencyCode}}\",\r\n    \"active\": true,\r\n    \"capacity\": \"{{$randomInt}}\",\r\n    \"type\": \"LABORATORY\",\r\n    \"school\": \"6390f3207a3bcb6a7ac977f9\"\r\n}\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}location",
+											"host": [
+												"{{url}}location"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "ADD Locations Negative",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Body matches string\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"already exists\");\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": null,\r\n  \"name\": \"{{locationsName}}\",\r\n  \"shortName\": \"{{locationShortName}}\",\r\n  \"active\": true,\r\n  \"capacity\": \"{{locationsCap}}\",\r\n  \"type\": \"LABORATORY\",\r\n  \"school\": \"{{schoolId}}\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}location",
+											"host": [
+												"{{url}}location"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "EDIT Locations",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": \"{{locationsID}}\",\r\n  \"name\": \"team1 {{locationsName}}\",\r\n  \"shortName\": \"t1 {{locationShortName}}\",\r\n  \"active\": true,\r\n  \"capacity\": \"100\",\r\n  \"type\": \"CLASS\",\r\n  \"school\": \"{{schoolId}}\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}location",
+											"host": [
+												"{{url}}location"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "DELETE Locations",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}location/{{locationsID}}",
+											"host": [
+												"{{url}}location"
+											],
+											"path": [
+												"{{locationsID}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "DELETE Locations Negative",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Body matches string\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"SCHOOL_LOCATION_NOT_FOUND\");\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}location/{{locationsID}}",
+											"host": [
+												"{{url}}location"
+											],
+											"path": [
+												"{{locationsID}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "EDIT Locations Negative",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Body matches string\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"SCHOOL_LOCATION_NOT_FOUND\");\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": \"{{locationsID}}\",\r\n  \"name\": \"team1 Library\",\r\n  \"shortName\": \"t1\",\r\n  \"active\": true,\r\n  \"capacity\": \"3425\",\r\n  \"type\": \"CLASS\",\r\n  \"school\": \"{{schoolId}}\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}location",
+											"host": [
+												"{{url}}location"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Departments",
+							"item": [
+								{
+									"name": "Login",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"username\": \"{{username}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"rememberMe\": \"true\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/auth/login",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "ADD Departments",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var body = pm.response.json();\r",
+													"var departmentsID = pm.response.json().id;\r",
+													"var departmentsName = pm.response.json().name;\r",
+													"console.log(body);\r",
+													"\r",
+													"pm.collectionVariables.set(\"departmentsID\", departmentsID);\r",
+													"pm.collectionVariables.set(\"departmentsName\", departmentsName);\r",
+													"\r",
+													"pm.test(\"Status code is 201\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"name\": \"{{$randomDepartment}}\",\r\n  \"code\": \"{{$randomCurrencyCode}}\",\r\n  \"school\": \"{{schoolId}}\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}department",
+											"host": [
+												"{{url}}department"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "ADD Departments Negative",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Body matches string\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"There is already Department\");\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": null,\r\n  \"name\": \"{{departmentsName}}\",\r\n  \"code\": \"any\",\r\n  \"active\": true,\r\n  \"school\": \"6390f3207a3bcb6a7ac977f9\",\r\n  \"sections\": [],\r\n  \"constants\": []\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}department",
+											"host": [
+												"{{url}}department"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "EDIT Departments",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": \"{{departmentsID}}\",\r\n  \"name\": \"team1 {{$randomDepartment}}\",\r\n  \"code\": \"t1 {{$randomCurrencyCode}}\",\r\n  \"school\": \"{{schoolId}}\"\r\n}\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}department",
+											"host": [
+												"{{url}}department"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "DELETE Departments",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 204\", function () {\r",
+													"    pm.response.to.have.status(204);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{url}}department/{{departmentsID}}",
+											"host": [
+												"{{url}}department"
+											],
+											"path": [
+												"{{departmentsID}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "DELETE Departments Negative",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"//pm.test(\"Status code is 400\", function () {\r",
+													"//    pm.response.to.have.status(400);\r",
+													"//});\r",
+													"\r",
+													"//pm.test(\"Body matches string\", function () {\r",
+													"//pm.expect(pm.response.text()).to.include(\"not found\");\r",
+													"//});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{url}}department/{{departmentsID}}",
+											"host": [
+												"{{url}}department"
+											],
+											"path": [
+												"{{departmentsID}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "EDIT Departments Negative",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"\r",
+													"var departmentMessage = pm.response.json().message;\r",
+													"console.log(\"message:\",departmentMessage);\r",
+													"\r",
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Is body message include\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"error.http.400\");\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\": \"{{departmentsID}}\",\r\n    \"name\": \"Team1 {{$randomDepartment}}\",\r\n    \"code\": \"T1 {{$randomCurrencyCode}}\",\r\n    \"active\": false,\r\n    \"school\": {{schoolId}}\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}department",
+											"host": [
+												"{{url}}department"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Classes",
+							"item": [
+								{
+									"name": "Login",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "oauth2",
+											"oauth2": [
+												{
+													"key": "tokenType",
+													"value": "",
+													"type": "string"
+												},
+												{
+													"key": "addTokenTo",
+													"value": "header",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"username\": \"{{username}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"rememberMe\": \"true\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/auth/login",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "List Classes (Empty Search)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Successful POST request\", function () {\r",
+													"    pm.expect(pm.response.code).to.be.oneOf([200]);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"schoolId\": \"6390f3207a3bcb6a7ac977f9\",\r\n  \"academicYearId\": \"63918286c1e0ca225b833530\",\r\n  \"gradeLevelId\": null\r\n}\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}classes/search",
+											"host": [
+												"{{url}}classes"
+											],
+											"path": [
+												"search"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create A Class Some Existing Parameters",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var body=pm.response.json();\r",
+													"var id=body.id;\r",
+													"var name=body.name;\r",
+													"console.log(body , name , id); // kod doğruluk kontrolü\r",
+													"\r",
+													"pm.collectionVariables.set(\"classID\", id); // collection variable set olacak\r",
+													"pm.collectionVariables.set(\"className\", body.name);\r",
+													"\r",
+													"pm.test(\"Successful POST request\", function () {\r",
+													"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": null,\r\n  \"name\": \"Batch Turkey 44\",\r\n  \"shortName\": \"BT44\",\r\n  \"active\": true,\r\n  \"section\": \"DC\",\r\n  \"gradeLevel\": {\r\n    \"id\": \"63c67f38146a472f16667b5b\"\r\n  },\r\n  \"academicPeriod\": {\r\n    \"id\": \"63918286c1e0ca225b833530\"\r\n  },\r\n  \"teacher\": {\r\n    \"id\": \"63c68456146a472f16667b64\"\r\n  },\r\n  \"location\": {\r\n    \"id\": \"63c68314146a472f16667b62\"\r\n  },\r\n  \"department\": {\r\n    \"id\": \"63c6828d146a472f16667b60\"\r\n  },\r\n  \"school\": \"6390f3207a3bcb6a7ac977f9\"\r\n}\r\n\r\n\r\n{\r\n  \"schoolId\": \"6390f3207a3bcb6a7ac977f9\",\r\n  \"type\": \"TEACHER\",\r\n  \"active\": true\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}classes",
+											"host": [
+												"{{url}}classes"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "NEGATIVE Create A Class Some Existing Parameters",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": null,\r\n  \"name\": \"Batch Turkey 14\",\r\n  \"shortName\": \"BT14\",\r\n  \"active\": true,\r\n  \"section\": \"DC\",\r\n  \"gradeLevel\": {\r\n    \"id\": \"63c67f38146a472f16667b5b\"\r\n  },\r\n  \"academicPeriod\": {\r\n    \"id\": \"63918286c1e0ca225b833530\"\r\n  },\r\n  \"teacher\": {\r\n    \"id\": \"63c68456146a472f16667b64\"\r\n  },\r\n  \"location\": {\r\n    \"id\": \"63c68314146a472f16667b62\"\r\n  },\r\n  \"department\": {\r\n    \"id\": \"63c6828d146a472f16667b60\"\r\n  },\r\n  \"school\": \"6390f3207a3bcb6a7ac977f9\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}classes",
+											"host": [
+												"{{url}}classes"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create A Class Some Existing Parameters Copy",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": \"63c8fb151587cf7b8ffd123c\",\r\n  \"name\": \"US Batch12\",\r\n  \"shortName\": \"EB12\",\r\n  \"active\": true,\r\n  \"section\": \"DC\",\r\n  \"gradeLevel\": {\r\n    \"id\": \"63c4ca5785cc68334b7c4812\"\r\n  },\r\n  \"academicPeriod\": {\r\n    \"id\": \"63918286c1e0ca225b833530\"\r\n  },\r\n  \"teacher\": {\r\n    \"id\": \"63c8f3cf1587cf7b8ffd1236\"\r\n  },\r\n  \"location\": {\r\n    \"id\": \"63c68314146a472f16667b62\"\r\n  },\r\n  \"department\": {\r\n    \"id\": \"63c6828d146a472f16667b60\"\r\n  },\r\n  \"school\": \"6390f3207a3bcb6a7ac977f9\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}classes",
+											"host": [
+												"{{url}}classes"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Employee List",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"schoolId\": \"6390f3207a3bcb6a7ac977f9\",\r\n  \"firstName\": null,\r\n  \"lastName\": null,\r\n  \"gender\": null,\r\n  \"type\": null,\r\n  \"status\": \"ACTIVE\",\r\n  \"active\": true\r\n}\r\n\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}employee/search",
+											"host": [
+												"{{url}}employee"
+											],
+											"path": [
+												"search"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create A Employee As A Teacher",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": null,\r\n  \"name\": \"Batch Turkey 11\",\r\n  \"shortName\": \"BT11\",\r\n  \"active\": true,\r\n  \"section\": \"DC\",\r\n  \"gradeLevel\": {\r\n    \"id\": \"63c67f38146a472f16667b5b\"\r\n  },\r\n  \"academicPeriod\": {\r\n    \"id\": \"63918286c1e0ca225b833530\"\r\n  },\r\n  \"teacher\": {\r\n    \"id\": \"63c68456146a472f16667b64\"\r\n  },\r\n  \"location\": {\r\n    \"id\": \"63c68314146a472f16667b62\"\r\n  },\r\n  \"department\": {\r\n    \"id\": \"63c6828d146a472f16667b60\"\r\n  },\r\n  \"school\": \"6390f3207a3bcb6a7ac977f9\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}employee",
+											"host": [
+												"{{url}}employee"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create a new City from existing Country Copy",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var body=pm.response.json();\r",
+													"var id=body.id;\r",
+													"var name=body.name;\r",
+													"console.log(body,id,name);\r",
+													"\r",
+													"pm.collectionVariables.set(\"cityID\",id);\r",
+													"pm.collectionVariables.set(\"cityName\",name);\r",
+													"\r",
+													"pm.test(\"Successful POST request\", function () {\r",
+													"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\": null,\r\n    \"country\": {\r\n        \"id\": \"63a41a0dcb75ee5c2199a8bc\", \r\n        \"name\": null,\r\n        \"shortName\": null,\r\n        \"translateName\": null,\r\n        \"code\": null,\r\n        \"hasState\": false\r\n    },\r\n    \"state\": null,\r\n    \"name\": \"{{$randomCity}}\",\r\n    \"shortName\": null,\r\n    \"translateName\": [],\r\n    \"code\": null\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}cities",
+											"host": [
+												"{{url}}cities"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create Again Same City (NEGATIVE) Copy",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\": null,\r\n    \"country\": {\r\n        \"id\": \"63a41a0dcb75ee5c2199a8bc\", \r\n        \"name\": null,\r\n        \"shortName\": null,\r\n        \"translateName\": null,\r\n        \"code\": null,\r\n        \"hasState\": false\r\n    },\r\n    \"state\": null,\r\n    \"name\": \"{{cityName}}\",\r\n    \"shortName\": null,\r\n    \"translateName\": [],\r\n    \"code\": null\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}cities",
+											"host": [
+												"{{url}}cities"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create Country for City Creation Copy",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var body=pm.response.json();\r",
+													"var id=body.id;\r",
+													"var name=body.name;\r",
+													"console.log(body , name , id); // kod doğruluk kontrolü\r",
+													"\r",
+													"pm.collectionVariables.set(\"countryID\", id); // collection variable set olacak\r",
+													"pm.collectionVariables.set(\"countryName\", body.name);\r",
+													"\r",
+													"pm.test(\"Successful POST request\", function () {\r",
+													"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": null,\r\n  \"name\": \"{{$randomCountry}} {{$randomInt}}\",\r\n  \"code\": \"{{$randomCountryCode}} {{$randomInt}}\",\r\n  \"translateName\": [],\r\n  \"hasState\": false\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}countries",
+											"host": [
+												"{{url}}countries"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create a new City from just existing Country Copy",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var body=pm.response.json();\r",
+													"var id=body.id;\r",
+													"var name=body.name;\r",
+													"console.log(body,id,name);\r",
+													"\r",
+													"pm.collectionVariables.set(\"cityID\",id);\r",
+													"pm.collectionVariables.set(\"cityName\",name);\r",
+													"\r",
+													"pm.test(\"Successful POST request\", function () {\r",
+													"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\": null,\r\n    \"country\": {\r\n        \"id\": \"63a41a0dcb75ee5c2199a8bc\", \r\n        \"name\": null,\r\n        \"shortName\": null,\r\n        \"translateName\": null,\r\n        \"code\": null,\r\n        \"hasState\": false\r\n    },\r\n    \"state\": null,\r\n    \"name\": \"{{$randomCity}}\",\r\n    \"shortName\": null,\r\n    \"translateName\": [],\r\n    \"code\": null\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}cities",
+											"host": [
+												"{{url}}cities"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update City From Existing Country Copy",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": \"{{cityID}}\",\r\n  \"name\": \"{{cityName}} t12\",\r\n  \"country\": {\r\n    \"id\": \"{{countryID}}\"\r\n  },\r\n  \"state\": null,\r\n  \"translateName\": []\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}cities",
+											"host": [
+												"{{url}}cities"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete City of New Created from existing Country Copy",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{url}}cities/{{cityID}}",
+											"host": [
+												"{{url}}cities"
+											],
+											"path": [
+												"{{cityID}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Again Same City of New Created from existing Country Copy",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{url}}cities/{{cityID}}",
+											"host": [
+												"{{url}}cities"
+											],
+											"path": [
+												"{{cityID}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update The Deleted City (NEGATIVE) Copy",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Body matches string\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"Can't find City\");\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": \"{{cityID}}\",\r\n  \"name\": \"{{cityName}} t12\",\r\n  \"country\": {\r\n    \"id\": \"{{countryID}}\"\r\n  },\r\n  \"state\": null,\r\n  \"translateName\": []\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}cities",
+											"host": [
+												"{{url}}cities"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Schools (Admin)",
+							"item": []
+						},
+						{
+							"name": "School (Active)",
+							"item": []
+						},
+						{
+							"name": "Academic Calendar",
+							"item": []
+						},
+						{
+							"name": "Users",
+							"item": []
+						},
+						{
+							"name": "Imported Users",
+							"item": []
+						},
+						{
+							"name": "Contract Templates",
+							"item": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "+Messagigng",
+			"item": []
+		},
+		{
+			"name": "+Entrance Exam",
+			"item": []
+		},
+		{
+			"name": "+Student",
+			"item": []
+		},
+		{
+			"name": "+Finance",
+			"item": []
+		},
+		{
+			"name": "+Human Resources",
+			"item": [
+				{
+					"name": "Setup",
+					"item": [
+						{
+							"name": "Positions",
+							"item": [
+								{
+									"name": "Login",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"username\": \"{{username}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"rememberMe\": true\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/auth/login",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "List Position (Empty Search)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"\r",
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}employee-position/search",
+											"host": [
+												"{{url}}employee-position"
+											],
+											"path": [
+												"search"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "ADD Position",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var body=pm.response.json();\r",
+													"var positionName = body.name;\r",
+													"var positionShortName = body.shortName;\r",
+													"var positionId = body.id;\r",
+													"var tenantId = body.tenantId;\r",
+													"console.log(positionName, positionId);\r",
+													"console.log(body);\r",
+													"\r",
+													"pm.collectionVariables.set(\"positionName\", positionName);\r",
+													"pm.collectionVariables.set(\"positionShortName\", positionShortName);\r",
+													"pm.collectionVariables.set(\"positionId\", positionId);\r",
+													"\r",
+													"pm.test(\"Status code is 201\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": null,\r\n  \"name\": \"{{$randomBsNoun}} {{$randomAlphaNumeric}}\",\r\n  \"shortName\": \"{{$randomAlphaNumeric}}{{$randomInt}}\",\r\n  \"translateName\": [],\r\n  \"tenantId\": \"6390ef53f697997914ec20c2\",\r\n  \"active\": true\r\n}\r\n\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}employee-position",
+											"host": [
+												"{{url}}employee-position"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "ADD Position NEGATIVE",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var body = pm.response.json()\r",
+													"var positionMessage = body.message;\r",
+													"console.log(positionMessage);\r",
+													"\r",
+													"pm.test(\"Body matches string\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"The Position with Name \",pm.response.json().positionName,\" already exists.\");\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": null,\r\n  \"name\": \"{{positionName}}\",\r\n  \"shortName\": \"null\",\r\n  \"translateName\": [],\r\n  \"tenantId\": \"6390ef53f697997914ec20c2\",\r\n  \"active\": true\r\n}\r\n\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}employee-position",
+											"host": [
+												"{{url}}employee-position"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "EDIT Position",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\": \"{{positionId}}\",\r\n    \"name\": \"team1 {{positionName}}\",\r\n    \"shortName\": \"t1 {{positionShortName}}\",\r\n    \"translateName\": [],\r\n    \"tenantId\": \"6390ef53f697997914ec20c2\",\r\n    \"active\": true\r\n}\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}employee-position",
+											"host": [
+												"{{url}}employee-position"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "DELETE  Position",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 204\", function () {\r",
+													"    pm.response.to.have.status(204);\r",
+													"});\r",
+													"\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}employee-position/{{positionId}}",
+											"host": [
+												"{{url}}employee-position"
+											],
+											"path": [
+												"{{positionId}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Search  Deleted Position",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"// Silinmiş değeri Search yaptığımızda, sorgunun sonucu boş olarak dönüyo mu?\r",
+													"pm.test(\"Body matches string\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"\"); \r",
+													"});\r",
+													"\r",
+													"pm.test(\"Body is correct\", function () {\r",
+													"    pm.response.to.have.body(\"[]\");\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"name\": \"team1 {{positionName}}\",\r\n  \"shortName\": \"t1 {{positionShortName}}\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}employee-position/search",
+											"host": [
+												"{{url}}employee-position"
+											],
+											"path": [
+												"search"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "DELETE  Position NEGATIVE",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 204 > No Content\", function () {\r",
+													"    pm.response.to.have.status(204);\r",
+													"});\r",
+													"\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}employee-position/{{positionId}}",
+											"host": [
+												"{{url}}employee-position"
+											],
+											"path": [
+												"{{positionId}}"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Work Calendar",
+							"item": []
+						},
+						{
+							"name": "Attestations",
+							"item": [
+								{
+									"name": "Login",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"username\": \"{{username}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"rememberMe\": \"true\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/auth/login",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "ADD Attestation",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var body = pm.response.json();\r",
+													"var attestationName = body.name;\r",
+													"var attestationId = body.id;\r",
+													"console.log(attestationName, attestationId);\r",
+													"\r",
+													"pm.collectionVariables.set(\"attestationName\", attestationName);\r",
+													"pm.collectionVariables.set(\"attestationId\", attestationId);\r",
+													"\r",
+													"\r",
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": null,\r\n  \"name\": \"{{$randomBsAdjective}} {{$randomInt}}\",\r\n  \"translateName\": []\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}attestation",
+											"host": [
+												"{{url}}attestation"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "ADD Attestation NEGATIVE",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var attestationMessage = pm.response.json().message;\r",
+													"console.log(attestationMessage);\r",
+													"\r",
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": null,\r\n  \"name\": \"{{attestationName}}\",\r\n  \"translateName\": []\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}attestation",
+											"host": [
+												"{{url}}attestation"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "EDIT Attestation",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": \"{{attestationId}}\",\r\n  \"name\": \"team1 {{attestationName}}\",\r\n  \"translateName\": []\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}attestation",
+											"host": [
+												"{{url}}attestation"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "DELETE  Attestation",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 204\", function () {\r",
+													"    pm.response.to.have.status(204);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": \"{{attestationId}}\",\r\n  \"name\": \"team1 {{attestationName}}\",\r\n  \"translateName\": []\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}attestation/{{attestationId}}",
+											"host": [
+												"{{url}}attestation"
+											],
+											"path": [
+												"{{attestationId}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "DELETE  Attestation NEGATIVE",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var attestationMessage = pm.response.json().message;\r",
+													"console.log(attestationMessage);\r",
+													"\r",
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Attestation not found\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"attestation not found\");\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": \"{{attestationId}}\",\r\n  \"name\": \"group2 {{attestationName}}\",\r\n  \"translateName\": []\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}attestation/{{attestationId}}",
+											"host": [
+												"{{url}}attestation"
+											],
+											"path": [
+												"{{attestationId}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "EDIT Attestation NEGATIVE",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var attestationMessage = pm.response.json().message;\r",
+													"var attestationDetails = pm.response.json().detail;\r",
+													"console.log(\"message:\",attestationMessage);\r",
+													"console.log(\"detail:\",attestationDetails);\r",
+													"\r",
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Can't find Attestation\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"Can't find Attestation\");\r",
+													"});\r",
+													"\r",
+													"\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": \"{{attestationId}}\",\r\n  \"name\": \"team1 {{attestationName}}\",\r\n  \"translateName\": []\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}attestation",
+											"host": [
+												"{{url}}attestation"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Position Categories",
+							"item": [
+								{
+									"name": "Login",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"username\": \"{{username}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"rememberMe\": \"true\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/auth/login",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "ADD Position Categories",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var positionCatName = pm.response.json().name;\r",
+													"var positionCatId = pm.response.json().id;\r",
+													"console.log(positionCatName, positionCatId);\r",
+													"\r",
+													"pm.collectionVariables.set(\"positionCatName\", positionCatName);\r",
+													"pm.collectionVariables.set(\"positionCatId\", positionCatId);\r",
+													"\r",
+													"\r",
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": null,\r\n  \"name\": \"{{$randomBsAdjective}} {{$randomInt}}\",\r\n  \"translateName\": []\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}position-category",
+											"host": [
+												"{{url}}position-category"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "ADD Position Categories NEGATIVE",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var positionCatMessage = pm.response.json().message;\r",
+													"console.log(positionCatMessage);\r",
+													"\r",
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Already Exists Message\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"already exists.\");\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": null,\r\n  \"name\": \"{{positionCatName}}\",\r\n  \"translateName\": []\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}position-category",
+											"host": [
+												"{{url}}position-category"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "EDIT Position Categories",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "\r\n{\r\n  \"id\": \"{{positionCatId}}\",\r\n  \"name\": \"team1 {{positionCatName}}\",\r\n  \"translateName\": []\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}position-category",
+											"host": [
+												"{{url}}position-category"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "DELETE  Position Categories",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 204\", function () {\r",
+													"    pm.response.to.have.status(204);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": \"{{positionCatId}}\",\r\n  \"name\": \"team1 {{positionCatName}}\",\r\n  \"translateName\": []\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}position-category/{{positionCatId}}",
+											"host": [
+												"{{url}}position-category"
+											],
+											"path": [
+												"{{positionCatId}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "DELETE  Position Categories NEGATIVE",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"\r",
+													"positionCatMessage = pm.response.json().message;\r",
+													"console.log(positionCatMessage);\r",
+													"\r",
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Can not find\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"not  found\");\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "\r\n{\r\n  \"id\": \"{{positionCatId}}\",\r\n  \"name\": \"team1 {{positionCatName}}\",\r\n  \"translateName\": []\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}position-category/{{positionCatId}}",
+											"host": [
+												"{{url}}position-category"
+											],
+											"path": [
+												"{{positionCatId}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "EDIT Position Categories NEGATIVE",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var positionCatMessage = pm.response.json().message;\r",
+													"var positionCatDetails = pm.response.json().detail;\r",
+													"console.log(\"message:\",positionCatMessage);\r",
+													"console.log(\"detail:\",positionCatDetails);\r",
+													"\r",
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Can't find Position Category\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"Can't find Position Category\");\r",
+													"});\r",
+													"\r",
+													"\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": \"{{positionCatId}}\",\r\n  \"name\": \"team1 {{positionCatName}}\",\r\n  \"translateName\": []\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}position-category",
+											"host": [
+												"{{url}}position-category"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Dismissal Articles",
+							"item": []
+						}
+					]
+				},
+				{
+					"name": "Employees",
+					"item": [
+						{
+							"name": "Login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "oauth2",
+									"oauth2": [
+										{
+											"key": "tokenType",
+											"value": "",
+											"type": "string"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"username\": \"{{username}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"rememberMe\": \"true\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://test.mersys.io/auth/login",
+									"protocol": "https",
+									"host": [
+										"test",
+										"mersys",
+										"io"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Salary",
+					"item": []
+				}
+			]
+		},
+		{
+			"name": "+Education",
+			"item": [
+				{
+					"name": "Subject Categories",
+					"item": [
+						{
+							"name": "Login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"username\": \"{{username}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"rememberMe\": \"true\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://test.mersys.io/auth/login",
+									"protocol": "https",
+									"host": [
+										"test",
+										"mersys",
+										"io"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "List Subject Categories (Empty Search)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}subject-categories/search",
+									"host": [
+										"{{url}}subject-categories"
+									],
+									"path": [
+										"search"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ADD Subject Categories",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var scName = pm.response.json().name;\r",
+											"var scCode = pm.response.json().code;\r",
+											"var scId = pm.response.json().id;\r",
+											"\r",
+											"pm.collectionVariables.set(\"subjectCategoriesName\", scName);\r",
+											"pm.collectionVariables.set(\"subjectCategoriesCode\", scCode);\r",
+											"pm.collectionVariables.set(\"subjectCategoriesId\", scId);\r",
+											"console.log(scName,scCode,scId);\r",
+											"\r",
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"id\": null,\r\n  \"name\": \"{{$randomJobDescriptor}}{{$randomInt}}\",\r\n  \"code\": \"{{$randomAlphaNumeric}}{{$randomInt}}\",\r\n  \"active\": false,\r\n  \"translateName\": []\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}subject-categories",
+									"host": [
+										"{{url}}subject-categories"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ADD Subject Categories NEGATIVE",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var scMessage = pm.response.json().message;\r",
+											"console.log(scMessage);\r",
+											"\r",
+											"pm.test(\"Body matches string\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"The Subject Category with Name \",pm.response.json().scName,\" already exists.\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"id\": null,\r\n  \"name\": \"{{subjectCategoriesName}}\",\r\n  \"code\": \"{{subjectCategoriesCode}}\",\r\n  \"active\": false,\r\n  \"translateName\": []\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}subject-categories",
+									"host": [
+										"{{url}}subject-categories"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "EDIT Subject Categories",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"{{subjectCategoriesId}}\",\r\n  \"name\": \"team1 {{subjectCategoriesName}}\",\r\n  \"code\": \"t1 {{subjectCategoriesCode}}\",\r\n  \"active\": true,\r\n  \"translateName\": []\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}subject-categories",
+									"host": [
+										"{{url}}subject-categories"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE Subject Categories",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}subject-categories/{{subjectCategoriesId}}",
+									"host": [
+										"{{url}}subject-categories"
+									],
+									"path": [
+										"{{subjectCategoriesId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE Subject Categories NEGATIVE",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Body matches string\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"SubjectCategory not  found\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}subject-categories/{{subjectCategoriesId}}",
+									"host": [
+										"{{url}}subject-categories"
+									],
+									"path": [
+										"{{subjectCategoriesId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "EDIT Subject Categories NEGATIVE",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Body matches string\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"SubjectCategory is null\",\"Can't find Subject Category\");\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"{{subjectCategoriesId}}\",\r\n  \"name\": \"team1 {{subjectCategoriesName}}\",\r\n  \"code\": \"t1 {{subjectCategoriesCode}}\",\r\n  \"active\": true,\r\n  \"translateName\": []\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}subject-categories",
+									"host": [
+										"{{url}}subject-categories"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Courses",
+					"item": []
+				},
+				{
+					"name": "Grade Categories",
+					"item": []
+				},
+				{
+					"name": "Grading Schme",
+					"item": []
+				},
+				{
+					"name": "Grade Excuse Types",
+					"item": []
+				}
+			]
+		},
+		{
+			"name": "+Video Conference",
+			"item": []
+		},
+		{
+			"name": "+Surveys",
+			"item": []
+		},
+		{
+			"name": "+Question Bank",
+			"item": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "countryID",
+			"value": ""
+		},
+		{
+			"key": "countryName",
+			"value": ""
+		},
+		{
+			"key": "name",
+			"value": ""
+		},
+		{
+			"key": "positionCatName",
+			"value": ""
+		},
+		{
+			"key": "positionCatId",
+			"value": ""
+		},
+		{
+			"key": "locationsID",
+			"value": ""
+		},
+		{
+			"key": "locationsName",
+			"value": ""
+		},
+		{
+			"key": "positionName",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "positionShortName",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "positionId",
+			"value": ""
+		},
+		{
+			"key": "tenantId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "position.TenantId",
+			"value": ""
+		},
+		{
+			"key": "attestationName",
+			"value": ""
+		},
+		{
+			"key": "attestationId",
+			"value": ""
+		},
+		{
+			"key": "subjectCategoriesName",
+			"value": ""
+		},
+		{
+			"key": "subjectCategoriesCode",
+			"value": ""
+		},
+		{
+			"key": "subjectCategoriesId",
+			"value": ""
+		},
+		{
+			"key": "departmentsID",
+			"value": ""
+		},
+		{
+			"key": "departmentsName",
+			"value": ""
+		},
+		{
+			"key": "URL",
+			"value": "https://test.mersys.io"
+		},
+		{
+			"key": "locationShortName",
+			"value": ""
+		},
+		{
+			"key": "locationsCap",
+			"value": ""
+		},
+		{
+			"key": "schoolId",
+			"value": ""
+		},
+		{
+			"key": "feeID",
+			"value": ""
+		},
+		{
+			"key": "feeName",
+			"value": ""
+		},
+		{
+			"key": "feeCode",
+			"value": ""
+		},
+		{
+			"key": "feeIntCode",
+			"value": ""
+		},
+		{
+			"key": "feePriority",
+			"value": ""
+		},
+		{
+			"key": "gradeID",
+			"value": ""
+		},
+		{
+			"key": "gradeName",
+			"value": ""
+		},
+		{
+			"key": "gradeShortName",
+			"value": ""
+		},
+		{
+			"key": "StateID",
+			"value": ""
+		},
+		{
+			"key": "StateName",
+			"value": ""
+		},
+		{
+			"key": "StateShortName",
+			"value": ""
+		},
+		{
+			"key": "citizenShip",
+			"value": ""
+		},
+		{
+			"key": "citizenShipID",
+			"value": ""
+		},
+		{
+			"key": "citizenShipName",
+			"value": ""
+		},
+		{
+			"key": "documentID",
+			"value": ""
+		},
+		{
+			"key": "documentName",
+			"value": ""
+		},
+		{
+			"key": "cityName",
+			"value": ""
+		},
+		{
+			"key": "cityID",
+			"value": ""
+		},
+		{
+			"key": "fieldID",
+			"value": ""
+		},
+		{
+			"key": "fieldName",
+			"value": ""
+		},
+		{
+			"key": "fieldCode",
+			"value": ""
+		},
+		{
+			"key": "classID",
+			"value": ""
+		},
+		{
+			"key": "className",
+			"value": ""
+		}
+	]
+}
